@@ -1,0 +1,110 @@
+id: network.koesling.shm-modbus
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+command: modbus-shm
+finish-args:
+  - --device=shm
+  - --share=network
+modules:
+  - name: launch_script
+    buildsystem: simple
+    build-commands:
+      - mkdir -p "${FLATPAK_DEST}/bin"
+      - cp modbus-shm ${FLATPAK_DEST}/bin
+
+      - chmod +x ${FLATPAK_DEST}/bin/modbus-shm
+
+    sources:
+      - type: file
+        path: modbus-shm
+
+  - name: Modbus_TCP_client_shm
+    buildsystem: simple
+    build-commands:
+      # build
+      - mkdir build
+      - cmake -B build . -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+      - cmake --build build
+
+      # install
+      - mkdir -p "${FLATPAK_DEST}/bin"
+      - cp build/Modbus_TCP_client_shm ${FLATPAK_DEST}/bin/modbus-tcp-client-shm
+
+    sources:
+      - type: git
+        tag: v1.1.0
+        commit: b93c5cf441acf60fa3dc1a327108216cae1a3e44 
+        url: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
+
+  - name: Modbus_RTU_client_shm
+    buildsystem: simple
+    build-commands:
+      # build
+      - mkdir build
+      - cmake -B build . -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+      - cmake --build build
+
+      # install
+      - mkdir -p "${FLATPAK_DEST}/bin"
+      - cp build/Modbus_RTU_client_shm ${FLATPAK_DEST}/bin/modbus-rtu-client-shm
+
+    sources:
+      - type: git
+        tag: v0.1.3
+        commit: 28bc065f4860927aa283e82bf7ed09a28fa09878 
+        url: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
+
+  - name: write_shm
+    buildsystem: simple
+    build-commands:
+      # build
+      - mkdir build
+      - cmake -B build . -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+      - cmake --build build
+
+      # install
+      - mkdir -p "${FLATPAK_DEST}/bin"
+      - cp build/write_shm ${FLATPAK_DEST}/bin/write-shm
+
+    sources:
+      - type: git
+        tag: v0.1.2
+        commit: 89a0647f349b1c87d30e7ea1cb51e87f649a2531 
+        url: https://github.com/NikolasK-source/write_shm.git
+
+  - name: SHM_random
+    buildsystem: simple
+    build-commands:
+      # build
+      - mkdir build
+      - cmake -B build . -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+      - cmake --build build
+
+      # install
+      - mkdir -p "${FLATPAK_DEST}/bin"
+      - cp build/SHM_Random ${FLATPAK_DEST}/bin/shared-mem-random
+
+    sources:
+      - type: git
+        tag: v1.0.3
+        commit: 4d830df46308ef045d96b75898f1cd4360681c8a 
+        url: https://github.com/NikolasK-source/shared_mem_random.git
+
+  - name: dump_shm
+    buildsystem: simple
+    build-commands:
+      # build
+      - mkdir build
+      - cmake -B build . -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+      - cmake --build build
+
+      # install
+      - mkdir -p "${FLATPAK_DEST}/bin"
+      - cp build/dump_shm ${FLATPAK_DEST}/bin/dump-shm
+
+    sources:
+      - type: git
+        tag: v1.0.1
+        commit: b26d583cd7847a5325bae692af9bbc7d28e253fa 
+        url: https://github.com/NikolasK-source/dump_shm.git
