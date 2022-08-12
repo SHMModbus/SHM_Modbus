@@ -28,14 +28,11 @@
         <keyword translate="no">Modbus-TCP</keyword>
         <keyword translate="no">Modbus-RTU</keyword>
         <keyword translate="no">Modbus-Client</keyword>
-        <keyword translate="no">Modbus=Slave</keyword>
+        <keyword translate="no">Modbus-Slave</keyword>
         <keyword translate="no">SharedMemory</keyword>
         <keyword translate="no">shm</keyword>
     </keywords>
-    <url type="homepage">https://github.com/NikolasK-source/SHM_Modbus</url>
-    <url type="bugtracker">https://github.com/NikolasK-source/SHM_Modbus/issues</url>
-    <url type="vcs-browser">https://github.com/NikolasK-source/SHM_Modbus</url>
-    <url type="contribute">https://github.com/NikolasK-source/SHM_Modbus</url>
+    <url type="homepage">https://nikolask-source.github.io/shm_modbus/</url>
     <releases>
         <release version="0.0.1" date="2022-08-12"/>
     </releases>
@@ -49,5 +46,5 @@
         <binary>shared-mem-random</binary>
         <binary>test</binary>
     </provides>
-    <content_rating type="oars-1.0" />
+    <content_rating type="oars-1.1" />
 </component>

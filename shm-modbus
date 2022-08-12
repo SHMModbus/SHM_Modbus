@@ -12,7 +12,6 @@ EXEC_COMMANDS=( \
     "write-shm" \
     "stdin-to-modbus-shm" \
     "shared-mem-random" \
-    "test" \
 )
 
 arg_count=$#

@@ -2,7 +2,7 @@ id: network.koesling.shm-modbus
 runtime: org.freedesktop.Platform
 runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
-command: modbus-shm
+command: shm-modbus
 finish-args:
   - --device=shm
   - --share=network
@@ -11,13 +11,13 @@ modules:
     buildsystem: simple
     build-commands:
       - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp modbus-shm ${FLATPAK_DEST}/bin
+      - cp shm-modbus ${FLATPAK_DEST}/bin
 
-      - chmod +x ${FLATPAK_DEST}/bin/modbus-shm
+      - chmod +x ${FLATPAK_DEST}/bin/shm-modbus
 
     sources:
       - type: file
-        path: modbus-shm
+        path: shm-modbus
 
   - name: Modbus_TCP_client_shm
     buildsystem: simple
@@ -113,7 +113,7 @@ modules:
     buildsystem: simple
     build-commands:
       - mkdir -p "${FLATPAK_DEST}/share/metainfo/"
-      cp network.koesling.shm-modbus.metainfo.xml ${FLATPAK_DEST}/share/metainfo/"
+      - cp network.koesling.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/"
 
     sources:
       - type: file
