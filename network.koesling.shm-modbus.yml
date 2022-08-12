@@ -108,3 +108,13 @@ modules:
         tag: v1.0.1
         commit: b26d583cd7847a5325bae692af9bbc7d28e253fa 
         url: https://github.com/NikolasK-source/dump_shm.git
+
+  - name: metainfo
+    buildsystem: simple
+    build-commands:
+      - mkdir -p "${FLATPAK_DEST}/share/metainfo/"
+      cp network.koesling.shm-modbus.metainfo.xml ${FLATPAK_DEST}/share/metainfo/"
+
+    sources:
+      - type: file
+        path: network.koesling.shm-modbus.metainfo.xml

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2022 Nikolas Koesling <nikolas@koesling.info> -->
+<component type="console-application">
+    <id>network.koesling.shm-modbus</id>
+    <metadata_license>MIT</metadata_license>
+    <project_license>MIT</project_license>
+    <developer_name>Nikolas Koesling</developer_name>
+    <name>SHM Modbus</name>
+    <summary>A collection of tools to simulate a modbus TCP/RTU client.</summary>
+    <description>
+        <p>
+            Contains the following tools:
+            <ol>
+                <li>dump-shm</li>
+                <li>write-shm</li>
+                <li>shared-mem-random</li>
+                <li>modbus-tcp-client-shm</li>
+                <li>modbus-rtu-client-shm</li>
+                <li>stdin-to-modbus-shm</li>
+            </ol>
+        </p>
+    </description>
+    <categories>
+        <category>Development</category>
+    </categories>
+    <keywords>
+        <keyword translate="no">Modbus</keyword>
+        <keyword translate="no">Modbus-TCP</keyword>
+        <keyword translate="no">Modbus-RTU</keyword>
+        <keyword translate="no">Modbus-Client</keyword>
+        <keyword translate="no">Modbus=Slave</keyword>
+        <keyword translate="no">SharedMemory</keyword>
+        <keyword translate="no">shm</keyword>
+    </keywords>
+    <url type="homepage">https://github.com/NikolasK-source/SHM_Modbus</url>
+    <url type="bugtracker">https://github.com/NikolasK-source/SHM_Modbus/issues</url>
+    <url type="vcs-browser">https://github.com/NikolasK-source/SHM_Modbus</url>
+    <url type="contribute">https://github.com/NikolasK-source/SHM_Modbus</url>
+    <releases>
+        <release version="0.0.1" date="2022-08-12"/>
+    </releases>
+    <provides>
+        <binary>modbus-shm</binary>
+        <binary>modbus-tcp-client-shm</binary>
+        <binary>modbus-rtu-client-shm</binary>
+        <binary>dump-shm</binary>
+        <binary>write-shm</binary>
+        <binary>stdin-to-modbus-shm</binary>
+        <binary>shared-mem-random</binary>
+        <binary>test</binary>
+    </provides>
+    <content_rating type="oars-1.0" />
+</component>
