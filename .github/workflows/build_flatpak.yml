@@ -1,0 +1,18 @@
+on:
+  [ push, pull_request ]
+name: build flatpak
+jobs:
+  flatpak:
+    name: "flatpak"
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:freedesktop-21.08
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+      name: "Build"
+      with:
+        bundle: dump-shm.flatpak
+        manifest-path: network.koesling.shm-modbus.yml
+        cache-key: flatpak-builder-${{ github.sha }}
