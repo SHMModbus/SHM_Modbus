@@ -1,0 +1,3 @@
+#!/bin/bash
+flatpak run network.koesling.shm-modbus modbus-rtu-client-shm "$@"
+#8e75e85654f8fcdd62b1b2c4258b8963b495f99eb7d928bcf5d5e5cd61fe94fe  -

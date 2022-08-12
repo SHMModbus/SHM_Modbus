@@ -1,0 +1,3 @@
+#!/bin/bash
+flatpak run network.koesling.shm-modbus write-shm "$@"
+#bd752fca7f6e4a5eb5c875ba4f790f9b747afc4349c78f65e44a08470560a732  -

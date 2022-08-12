@@ -6,14 +6,12 @@ command: shm-modbus
 finish-args:
   - --device=shm
   - --share=network
+  - --filesystem=home
 modules:
   - name: launch_script
     buildsystem: simple
     build-commands:
-      - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp shm-modbus ${FLATPAK_DEST}/bin
-
-      - chmod +x ${FLATPAK_DEST}/bin/shm-modbus
+      - install -D -m 755 shm-modbus ${FLATPAK_DEST}/bin/shm-modbus
 
     sources:
       - type: file
@@ -28,8 +26,7 @@ modules:
       - cmake --build build
 
       # install
-      - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp build/Modbus_TCP_client_shm ${FLATPAK_DEST}/bin/modbus-tcp-client-shm
+      - install -D -m 755 build/Modbus_TCP_client_shm ${FLATPAK_DEST}/bin/modbus-tcp-client-shm
 
     sources:
       - type: git
@@ -46,8 +43,7 @@ modules:
       - cmake --build build
 
       # install
-      - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp build/Modbus_RTU_client_shm ${FLATPAK_DEST}/bin/modbus-rtu-client-shm
+      - install -D -m 755 build/Modbus_RTU_client_shm ${FLATPAK_DEST}/bin/modbus-rtu-client-shm
 
     sources:
       - type: git
@@ -64,8 +60,7 @@ modules:
       - cmake --build build
 
       # install
-      - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp build/write_shm ${FLATPAK_DEST}/bin/write-shm
+      - install -D -m 755 build/write_shm ${FLATPAK_DEST}/bin/write-shm
 
     sources:
       - type: git
@@ -82,8 +77,7 @@ modules:
       - cmake --build build
 
       # install
-      - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp build/SHM_Random ${FLATPAK_DEST}/bin/shared-mem-random
+      - install -D -m 755 build/SHM_Random ${FLATPAK_DEST}/bin/shared-mem-random
 
     sources:
       - type: git
@@ -100,8 +94,7 @@ modules:
       - cmake --build build
 
       # install
-      - mkdir -p "${FLATPAK_DEST}/bin"
-      - cp build/dump_shm ${FLATPAK_DEST}/bin/dump-shm
+      - install -D -m 755 build/dump_shm ${FLATPAK_DEST}/bin/dump-shm
 
     sources:
       - type: git
@@ -109,12 +102,44 @@ modules:
         commit: b26d583cd7847a5325bae692af9bbc7d28e253fa 
         url: https://github.com/NikolasK-source/dump_shm.git
 
-  - name: metainfo
+  - name: stdin-to-modbus-shm
     buildsystem: simple
     build-commands:
-      - mkdir -p "${FLATPAK_DEST}/share/metainfo/"
-      - cp network.koesling.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/"
+      # build
+      - mkdir build
+      - cmake -B build . -DCMAKE_BUILD_TYPE=Release -DCLANG_FORMAT=OFF -DCOMPILER_WARNINGS=OFF
+      - cmake --build build
+
+      # install
+      - install -D -m 755 build/stdin_to_modbus_shm ${FLATPAK_DEST}/bin/stdin-to-modbus-shm
+
+    sources:
+      - type: git
+        tag: v1.0.3
+        commit: ae248283ad0bf13a46773b4dff602a463620e27e 
+        url: https://github.com/NikolasK-source/stdin_to_modbus_shm.git
+
+
+  - name: metadata
+    buildsystem: simple
+    build-commands:
+      - install -D -m 644 network.koesling.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+      - install -D -m 644 shm-modbus.svg "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg" 
 
     sources:
       - type: file
         path: network.koesling.shm-modbus.metainfo.xml
+      - type: file
+        path: shm-modbus.svg
+  - name: launch_scripts
+    buildsystem: simple
+    build-commands:
+      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts dump-shm
+      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts write-shm
+      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts modbus-rtu-client-shm
+      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts modbus-tcp-client-shm
+      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts shared-mem-random
+      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts stdin-to-modbus-shm
+    sources:
+      - type: dir
+        path: launch_scripts

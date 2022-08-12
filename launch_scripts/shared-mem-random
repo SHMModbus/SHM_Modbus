@@ -1,0 +1,3 @@
+#!/bin/bash
+flatpak run network.koesling.shm-modbus shared-mem-random "$@"
+#aab015ff9318f868dc5b75b1e63cdd1119f44b742507cc50208878048c92b52d  -

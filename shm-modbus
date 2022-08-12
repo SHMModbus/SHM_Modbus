@@ -17,11 +17,13 @@ EXEC_COMMANDS=( \
 arg_count=$#
 
 if [[ ( "$arg_count" < 1 ) ]] ; then
-    >&2 echo "invalid call: use --help for more information"
+    >&2 echo "uinvalid call: use --help for more information"
     exit 64
 fi
 
 command=$1
+
+
 
 if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     echo "usage: $(basename "$0") [OPTION] command [CMD_OPTION..]"
@@ -30,7 +32,10 @@ if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     echo "  Use --help as argument for commands to get mor information about the usage of the program."
     echo ""
     echo "  options:"
+    echo "    --desktop                 start in desktop mode"
     echo "    -h --help                 show this message"
+    echo "    --install                 copy scripts to ~/bin to start the Modbus tools by calling their name"
+    echo "    --uninstall               remove scripts from ~/bin"
     echo "    --version                 show version of this script"
     echo "    --version-all             show version of all Mosbus tools"
     echo "    --license                 print license information for this script"
@@ -96,6 +101,26 @@ if [ "$command" = "--license-all" ]; then
     exit 0
 fi
 
+if [ "$command" = "--install" ]; then
+    for cmd in "${EXEC_COMMANDS[@]}"
+    do
+        install -D -m755 "$SCRIPTPATH/scripts/$cmd" "$HOME/bin/$cmd"
+    done    
+
+    echo "Installation completed. Enshure that \$HOME/bin is in your PATH environment variable."
+
+    exit 0
+fi
+
+if [ "$command" = "--uninstall" ]; then
+    for cmd in "${EXEC_COMMANDS[@]}"
+    do
+        # TODO use sha256sum to check if the file is the one that was installed by this script
+        rm -f ~/bin/$cmd
+    done  
+    exit 0
+fi
+
 for cmd in "${EXEC_COMMANDS[@]}"
 do
     if [ "$command" = "$cmd" ]; then
@@ -103,6 +128,110 @@ do
         exit 0
     fi
 done
+
+if [ "$command" = "--desktop" ]; then
+    echo "To use the full potential of the available Modbus tools the program must be started from the command line."
+
+    while true
+    do
+        echo ""
+        echo "Select your command:"
+        echo "   1) start modbus-tcp-client-shm (port 5020, 128 registers per type)"
+        echo "   2) start modbus-tcp-client-shm (port 5020, 128 registers per type) in reconnect mode"
+        echo ""
+        echo "  10) create hexdump of shared memory modbus_DO"
+        echo "  11) create hexdump of shared memory modbus_DI"
+        echo "  12) create hexdump of shared memory modbus_AO"
+        echo "  13) create hexdump of shared memory modbus_AI"
+        echo ""
+        echo "  18) initialize shared memory modbus_DO with all bits 0"
+        echo "  19) initialize shared memory modbus_DO with all bits 1"
+        echo "  20) initialize shared memory modbus_DO with random values"
+        echo "  21) initialize shared memory modbus_DI with all bits 0"
+        echo "  22) initialize shared memory modbus_DI with all bits 1"
+        echo "  23) initialize shared memory modbus_DI with random values"
+        echo "  24) initialize shared memory modbus_AO with all bits 0"
+        echo "  25) initialize shared memory modbus_AO with all bits 1"
+        echo "  26) initialize shared memory modbus_AO with random values"
+        echo "  27) initialize shared memory modbus_AI with all bits 0"
+        echo "  28) initialize shared memory modbus_AI with all bits 1"
+        echo "  29) initialize shared memory modbus_AI with random values"
+        echo ""
+        echo "  30) run stdin-to-modbus-shm"
+
+        # TODO user input
+        read -p "Enter command number: " user_input
+
+        if [ "$user_input" = "0" ]; then
+            exit 0
+        elif [ "$user_input" = "1" ]; then
+            $SCRIPTPATH/modbus-tcp-client-shm -p 5020 --do-registers 128 --di-registers 128 --ao-registers 128 --ai-registers 128
+
+        elif [ "$user_input" = "2" ]; then
+            $SCRIPTPATH/modbus-tcp-client-shm -p 5020 -r --do-registers 128 --di-registers 128 --ao-registers 128 --ai-registers 128
+
+        elif [ "$user_input" = "10" ]; then
+            $SCRIPTPATH/dump-shm modbus_DO | hexdump -C -v
+
+        elif [ "$user_input" = "11" ]; then
+            $SCRIPTPATH/dump-shm modbus_DI | hexdump -C -v
+
+        elif [ "$user_input" = "12" ]; then
+            $SCRIPTPATH/dump-shm modbus_AO | hexdump -C -v
+
+        elif [ "$user_input" = "13" ]; then
+            $SCRIPTPATH/dump-shm modbus_AI | hexdump -C -v
+
+        elif [ "$user_input" = "18" ]; then
+            $SCRIPTPATH/write-shm -n modbus_DO < /dev/zero
+            echo "ok"
+
+        elif [ "$user_input" = "19" ]; then
+            $SCRIPTPATH/write-shm -n modbus_DO -i < /dev/zero && echo "ok"
+
+        elif [ "$user_input" = "20" ]; then
+            $SCRIPTPATH/write-shm -n modbus_DO < /dev/random && echo "ok"
+
+        elif [ "$user_input" = "21" ]; then
+            $SCRIPTPATH/write-shm -n modbus_DI < /dev/zero && echo "ok"
+
+        elif [ "$user_input" = "22" ]; then
+            $SCRIPTPATH/write-shm -n modbus_DI -i < /dev/zero && echo "ok"
+            
+        elif [ "$user_input" = "23" ]; then
+            $SCRIPTPATH/write-shm -n modbus_DI < /dev/random && echo "ok"
+            
+        elif [ "$user_input" = "24" ]; then
+            $SCRIPTPATH/write-shm -n modbus_AO < /dev/zero && echo "ok"
+            
+        elif [ "$user_input" = "25" ]; then
+            $SCRIPTPATH/write-shm -n modbus_AO -i < /dev/zero && echo "ok"
+            
+        elif [ "$user_input" = "26" ]; then
+            $SCRIPTPATH/write-shm -n modbus_AO < /dev/random && echo "ok"
+            
+        elif [ "$user_input" = "27" ]; then
+            $SCRIPTPATH/write-shm -n modbus_AI < /dev/zero && echo "ok"
+            
+        elif [ "$user_input" = "28" ]; then
+            $SCRIPTPATH/write-shm -n modbus_AI -i < /dev/zero && echo "ok"
+            
+        elif [ "$user_input" = "29" ]; then
+            $SCRIPTPATH/write-shm -n modbus_AI < /dev/random && echo "ok"
+            
+        elif [ "$user_input" = "30" ]; then
+            $SCRIPTPATH/stdin-to-modbus-shm
+  
+        else
+            >&2 echo "invalid input. try again. use 0 to exit."
+            continue
+        fi
+
+        break;
+    done
+
+    exit 0;
+fi
 
 >&2 echo "unknown command $command: use --help for more information"
 exit 64
