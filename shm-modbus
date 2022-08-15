@@ -5,6 +5,9 @@ VERSION="0.0.1"
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself/4774063
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
+source $SCRIPTPATH/guided-commands.sh
+source $SCRIPTPATH/manual-commands.sh
+
 EXEC_COMMANDS=( \
     "modbus-tcp-client-shm" \
     "modbus-rtu-client-shm" \
@@ -135,93 +138,72 @@ if [ "$command" = "--desktop" ]; then
     while true
     do
         echo ""
-        echo "Select your command:"
-        echo "   1) start modbus-tcp-client-shm (port 5020, 128 registers per type)"
-        echo "   2) start modbus-tcp-client-shm (port 5020, 128 registers per type) in reconnect mode"
-        echo ""
-        echo "  10) create hexdump of shared memory modbus_DO"
-        echo "  11) create hexdump of shared memory modbus_DI"
-        echo "  12) create hexdump of shared memory modbus_AO"
-        echo "  13) create hexdump of shared memory modbus_AI"
-        echo ""
-        echo "  18) initialize shared memory modbus_DO with all bits 0"
-        echo "  19) initialize shared memory modbus_DO with all bits 1"
-        echo "  20) initialize shared memory modbus_DO with random values"
-        echo "  21) initialize shared memory modbus_DI with all bits 0"
-        echo "  22) initialize shared memory modbus_DI with all bits 1"
-        echo "  23) initialize shared memory modbus_DI with random values"
-        echo "  24) initialize shared memory modbus_AO with all bits 0"
-        echo "  25) initialize shared memory modbus_AO with all bits 1"
-        echo "  26) initialize shared memory modbus_AO with random values"
-        echo "  27) initialize shared memory modbus_AI with all bits 0"
-        echo "  28) initialize shared memory modbus_AI with all bits 1"
-        echo "  29) initialize shared memory modbus_AI with random values"
-        echo ""
-        echo "  30) run stdin-to-modbus-shm"
+        echo "The following applications can be executed:"
+        echo "  Guided: This script will guide you through the command line arguments:"
+        echo "     1) modbus-tcp-client-shm".
+        echo "     2) modbus-rtu-client-shm"
+        echo "     3) dump-shm"
+        echo "     4) write-shm"
+        echo "     5) shared-mem-random"
+        echo "     6) stdin-to-modbus-shm"
+        echo "  Manual: specify the command line arguments manually:"
+        echo "    11) modbus-tcp-client-shm".
+        echo "    12) modbus-rtu-client-shm"
+        echo "    13) dump-shm"
+        echo "    14) write-shm"
+        echo "    15) shared-mem-random"
+        echo "    16) stdin-to-modbus-shm"
+        echo "  Other:"
+        echo "     0) exit"
+        echo "    99) output short information text for each possible application"
 
         # TODO user input
         read -p "Enter command number: " user_input
 
-        if [ "$user_input" = "0" ]; then
-            exit 0
-        elif [ "$user_input" = "1" ]; then
-            $SCRIPTPATH/modbus-tcp-client-shm -p 5020 --do-registers 128 --di-registers 128 --ao-registers 128 --ai-registers 128
+        if [ "$user_input" = "0" ]; then                # exit
+            # Do nothing
+            true
 
-        elif [ "$user_input" = "2" ]; then
-            $SCRIPTPATH/modbus-tcp-client-shm -p 5020 -r --do-registers 128 --di-registers 128 --ao-registers 128 --ai-registers 128
+        elif [ "$user_input" = "99" ]; then              # help
+            # TODO
+            echo "Help Text."
 
-        elif [ "$user_input" = "10" ]; then
-            $SCRIPTPATH/dump-shm modbus_DO | hexdump -C -v
+        elif [ "$user_input" = "1" ]; then              # modbus-tcp-client-shm guided
+            guided_modbus_tcp_client_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "11" ]; then
-            $SCRIPTPATH/dump-shm modbus_DI | hexdump -C -v
+        elif [ "$user_input" = "2" ]; then              # modbus-rtu-client-shm guided
+            guided_modbus_rtu_client_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "12" ]; then
-            $SCRIPTPATH/dump-shm modbus_AO | hexdump -C -v
+        elif [ "$user_input" = "3" ]; then              # dump-shm guided
+            guided_dump_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "13" ]; then
-            $SCRIPTPATH/dump-shm modbus_AI | hexdump -C -v
+        elif [ "$user_input" = "4" ]; then              # write-shm guided
+            guided_write_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "18" ]; then
-            $SCRIPTPATH/write-shm -n modbus_DO < /dev/zero
-            echo "ok"
+        elif [ "$user_input" = "5" ]; then              # shared-mem-random guided
+            guided_shared_mem_random $SCRIPTPATH
 
-        elif [ "$user_input" = "19" ]; then
-            $SCRIPTPATH/write-shm -n modbus_DO -i < /dev/zero && echo "ok"
+        elif [ "$user_input" = "6" ]; then              # stdin-to-modbus-shm guided
+            guided_stdin_to_modbus_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "20" ]; then
-            $SCRIPTPATH/write-shm -n modbus_DO < /dev/random && echo "ok"
+        elif [ "$user_input" = "11" ]; then             # modbus-tcp-client-shm manual
+            manual_modbus_tcp_client_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "21" ]; then
-            $SCRIPTPATH/write-shm -n modbus_DI < /dev/zero && echo "ok"
+        elif [ "$user_input" = "12" ]; then             # modbus-rtu-client-shm manual
+            manual_modbus_rtu_client_shm $SCRIPTPATH
 
-        elif [ "$user_input" = "22" ]; then
-            $SCRIPTPATH/write-shm -n modbus_DI -i < /dev/zero && echo "ok"
-            
-        elif [ "$user_input" = "23" ]; then
-            $SCRIPTPATH/write-shm -n modbus_DI < /dev/random && echo "ok"
-            
-        elif [ "$user_input" = "24" ]; then
-            $SCRIPTPATH/write-shm -n modbus_AO < /dev/zero && echo "ok"
-            
-        elif [ "$user_input" = "25" ]; then
-            $SCRIPTPATH/write-shm -n modbus_AO -i < /dev/zero && echo "ok"
-            
-        elif [ "$user_input" = "26" ]; then
-            $SCRIPTPATH/write-shm -n modbus_AO < /dev/random && echo "ok"
-            
-        elif [ "$user_input" = "27" ]; then
-            $SCRIPTPATH/write-shm -n modbus_AI < /dev/zero && echo "ok"
-            
-        elif [ "$user_input" = "28" ]; then
-            $SCRIPTPATH/write-shm -n modbus_AI -i < /dev/zero && echo "ok"
-            
-        elif [ "$user_input" = "29" ]; then
-            $SCRIPTPATH/write-shm -n modbus_AI < /dev/random && echo "ok"
-            
-        elif [ "$user_input" = "30" ]; then
-            $SCRIPTPATH/stdin-to-modbus-shm
-  
+        elif [ "$user_input" = "13" ]; then             # dump-shm manual
+            manual_dump_shm $SCRIPTPATH
+
+        elif [ "$user_input" = "14" ]; then             # write-shm manual
+            manual_write_shm $SCRIPTPATH
+
+        elif [ "$user_input" = "15" ]; then             # shared-mem-random manual
+            manual_shared_mem_random $SCRIPTPATH
+
+        elif [ "$user_input" = "16" ]; then             # stdin-to-modbus-shm manual
+            manual_stdin_to_modbus_shm $SCRIPTPATH
+
         else
             >&2 echo "invalid input. try again. use 0 to exit."
             continue
