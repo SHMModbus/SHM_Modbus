@@ -12,10 +12,16 @@ modules:
     buildsystem: simple
     build-commands:
       - install -D -m 755 shm-modbus ${FLATPAK_DEST}/bin/shm-modbus
+      - install -D -m 644 guided-commands.sh ${FLATPAK_DEST}/bin/guided-commands.sh
+      - install -D -m 644 manual-commands.sh ${FLATPAK_DEST}/bin/manual-commands.sh
 
     sources:
       - type: file
         path: shm-modbus
+      - type: file
+        path: guided-commands.sh
+      - type: file
+        path: manual-commands.sh
 
   - name: Modbus_TCP_client_shm
     buildsystem: simple
@@ -131,6 +137,7 @@ modules:
         path: network.koesling.shm-modbus.metainfo.xml
       - type: file
         path: shm-modbus.svg
+
   - name: launch_scripts
     buildsystem: simple
     build-commands:

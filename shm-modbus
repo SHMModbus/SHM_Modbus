@@ -133,8 +133,6 @@ do
 done
 
 if [ "$command" = "--desktop" ]; then
-    echo "To use the full potential of the available Modbus tools the program must be started from the command line."
-
     while true
     do
         echo ""
