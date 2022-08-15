@@ -8,7 +8,18 @@ function read_command_line_args {
         echo "__INVALID__ARGS__"
         return
     fi
-    echo args
+    echo ${args}
+}
+
+function read_redirect_file {
+    read -p "file to redirect output (press return for none): " fname
+
+    re='^([0-9]|[a-z]|[A-Z]|[/\._]|[+-/])*$'
+    if ! [[ $fname =~ $re ]]; then
+        echo "__INVALID__ARGS__"
+        return
+    fi
+    echo $fname
 }
 
 function manual_modbus_tcp_client_shm {
@@ -17,11 +28,21 @@ function manual_modbus_tcp_client_shm {
     args=$(read_command_line_args)
 
     if [ "$args" = "__INVALID__ARGS__" ]; then
-    echo "Invalid characters in argument"
+        echo "Invalid characters in argument"
         return
     fi
 
-    $scriptpath/modbus-tcp-client-shm $args
+    redir=$(read_redirect_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    if [ "$redir" = "" ]; then
+        $scriptpath/modbus-tcp-client-shm ${args}
+    else
+        $scriptpath/modbus-tcp-client-shm ${args} > $redir
+    fi
 }
 
 function manual_modbus_rtu_client_shm {
