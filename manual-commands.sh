@@ -8,25 +8,35 @@ function read_command_line_args {
         echo "__INVALID__ARGS__"
         return
     fi
-    echo ${args}
+    echo "$args"
 }
 
 function read_redirect_file {
-    read -p "file to redirect output (press return for none): " fname
+    read -p "file to redirect output (stdout) (press return for none): " fname
 
     re='^([0-9]|[a-z]|[A-Z]|[/\._]|[+-/])*$'
     if ! [[ $fname =~ $re ]]; then
         echo "__INVALID__ARGS__"
         return
     fi
-    echo $fname
+    echo "$fname"
+}
+
+function read_input_file {
+    read -p "file to read input (stdin) (press return for none): " fname
+
+    re='^([0-9]|[a-z]|[A-Z]|[/\._]|[+-/])*$'
+    if ! [[ $fname =~ $re ]]; then
+        echo "__INVALID__ARGS__"
+        return
+    fi
+    echo "$fname"
 }
 
 function manual_modbus_tcp_client_shm {
     scriptpath=$1
 
     args=$(read_command_line_args)
-
     if [ "$args" = "__INVALID__ARGS__" ]; then
         echo "Invalid characters in argument"
         return
@@ -48,30 +58,116 @@ function manual_modbus_tcp_client_shm {
 function manual_modbus_rtu_client_shm {
     scriptpath=$1
 
-    echo "${FUNCNAME[0]}"
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    redir=$(read_redirect_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    if [ "$redir" = "" ]; then
+        $scriptpath/modbus-rtu-client-shm ${args}
+    else
+        $scriptpath/modbus-rtu-client-shm ${args} > $redir
+    fi
 }
 
 function manual_dump_shm {
     scriptpath=$1
 
-    echo "${FUNCNAME[0]}"
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    redir=$(read_redirect_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    if [ "$redir" = "" ]; then
+        $scriptpath/dump-shm ${args}
+    else
+        $scriptpath/dump-shm ${args} > $redir
+    fi
 }
 
 function manual_write_shm {
     scriptpath=$1
 
-    echo "${FUNCNAME[0]}"
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    input=$(read_input_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    redir=$(read_redirect_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    echo "${args}"
+
+    if [ "$redir" = "" ]; then
+        if [ "$input" == "" ]; then
+            $scriptpath/write-shm ${args}
+        else
+            $scriptpath/write-shm ${args} < $input
+        fi
+    else
+        if [ "$input" == "" ]; then
+            $scriptpath/write-shm ${args} > $redir
+        else
+            $scriptpath/write-shm ${args} < $input > $redir
+        fi
+    fi
 }
 
 function manual_shared_mem_random {
     scriptpath=$1
 
-    echo "${FUNCNAME[0]}"
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    $scriptpath/shared-mem-random ${args}
 }
 
 function manual_stdin_to_modbus_shm {
     scriptpath=$1
 
-    echo "${FUNCNAME[0]}"
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    input=$(read_input_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    if [ "$input" == "" ]; then
+        $scriptpath/stdin-to-modbus-shm ${args}
+    else
+        $scriptpath/stdin-to-modbus-shm ${args} < $input
+    fi
 }
 
