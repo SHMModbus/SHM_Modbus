@@ -56,6 +56,15 @@ if [ "$command" = "--version" ]; then
     exit 0
 fi
 
+if [ "$command" = "--version-all" ]; then
+    echo "modbus-shm $VERSION"
+    for cmd in "${EXEC_COMMANDS[@]}"
+    do
+        $SCRIPTPATH/$cmd --version
+    done
+    exit 0
+fi
+
 function print_license {
     echo '  MIT License'
     echo ''
