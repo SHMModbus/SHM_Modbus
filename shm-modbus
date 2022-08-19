@@ -26,8 +26,6 @@ fi
 
 command=$1
 
-
-
 if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     echo "usage: $(basename "$0") [OPTION] command [CMD_OPTION..]"
     echo ""
@@ -35,7 +33,7 @@ if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     echo "  Use --help as argument for commands to get mor information about the usage of the program."
     echo ""
     echo "  options:"
-    echo "    --desktop                 start in desktop mode"
+    echo "    --guided                  start in guided mode"
     echo "    -h --help                 show this message"
     echo "    --install                 copy scripts to ~/bin to start the Modbus tools by calling their name"
     echo "    --uninstall               remove scripts from ~/bin"
@@ -132,20 +130,20 @@ do
     fi
 done
 
-if [ "$command" = "--desktop" ]; then
+if [ "$command" = "--guided" ]; then
     while true
     do
         echo ""
         echo "The following applications can be executed:"
         echo "  Guided: This script will guide you through the command line arguments:"
-        echo "     1) modbus-tcp-client-shm".
+        echo "     1) modbus-tcp-client-shm"
         echo "     2) modbus-rtu-client-shm"
         echo "     3) dump-shm"
         echo "     4) write-shm"
         echo "     5) shared-mem-random"
         echo "     6) stdin-to-modbus-shm"
         echo "  Manual: specify the command line arguments manually:"
-        echo "    11) modbus-tcp-client-shm".
+        echo "    11) modbus-tcp-client-shm"
         echo "    12) modbus-rtu-client-shm"
         echo "    13) dump-shm"
         echo "    14) write-shm"
