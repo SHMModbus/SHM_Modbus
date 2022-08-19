@@ -130,13 +130,19 @@ modules:
     buildsystem: simple
     build-commands:
       - install -D -m 644 network.koesling.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
-      - install -D -m 644 shm-modbus.svg "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg" 
+      - install -D -m 644 -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps" ${FLATPAK_ID}.svg
+      - install -D -m 644 ${FLATPAK_ID}_256.png "${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/${FLATPAK_ID}.png"
+      - install -D -m 644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop
 
     sources:
       - type: file
         path: network.koesling.shm-modbus.metainfo.xml
       - type: file
-        path: shm-modbus.svg
+        path: network.koesling.shm-modbus.svg
+      - type: file
+        path: network.koesling.shm-modbus_256.png
+      - type: file
+        path: network.koesling.shm-modbus.desktop
 
   - name: launch_scripts
     buildsystem: simple

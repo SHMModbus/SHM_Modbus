@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="0.0.1"
+VERSION="1.0.0"
 
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself/4774063
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
@@ -20,7 +20,7 @@ EXEC_COMMANDS=( \
 arg_count=$#
 
 if [[ ( "$arg_count" < 1 ) ]] ; then
-    >&2 echo "uinvalid call: use --help for more information"
+    >&2 echo "invalid call: use --help for more information"
     exit 64
 fi
 
@@ -30,7 +30,7 @@ if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     echo "usage: $(basename "$0") [OPTION] command [CMD_OPTION..]"
     echo ""
     echo "  This script is a launcher script for several Modbus client simulator programs."
-    echo "  Use --help as argument for commands to get mor information about the usage of the program."
+    echo "  Use --help as argument for commands to get more information about the usage of the program."
     echo ""
     echo "  options:"
     echo "    --guided                  start in guided mode"
@@ -103,9 +103,18 @@ if [ "$command" = "--license-all" ]; then
 fi
 
 if [ "$command" = "--install" ]; then
+    
+
     for cmd in "${EXEC_COMMANDS[@]}"
     do
-        install -D -m755 "$SCRIPTPATH/scripts/$cmd" "$HOME/bin/$cmd"
+        target="$HOME/bin/$cmd"
+
+        if [ -e "$target" ]; then
+            echo "File exists: $target"
+            continue
+        fi
+
+        install -D -m755 "$SCRIPTPATH/scripts/$cmd" "$target"
     done    
 
     echo "Installation completed. Enshure that \$HOME/bin is in your PATH environment variable."
@@ -117,7 +126,17 @@ if [ "$command" = "--uninstall" ]; then
     for cmd in "${EXEC_COMMANDS[@]}"
     do
         # TODO use sha256sum to check if the file is the one that was installed by this script
-        rm -f ~/bin/$cmd
+
+        target=$HOME/bin/$cmd
+
+        sha256_file=$(tail -n 1 $target | cut -d '#' -f 2)
+        sha256_gen=$(head -n 2 $target | sha256sum | cut -d ' ' -f 1)
+
+        if [ "$sha256_file" = "$sha256_gen" ]; then
+            rm -f "$target"
+        else
+            echo "It seems that $target was not installed by this script. Therefore, it is not removed."
+        fi
     done  
     exit 0
 fi

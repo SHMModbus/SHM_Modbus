@@ -1,3 +1,3 @@
 #!/bin/bash
 flatpak run network.koesling.shm-modbus stdin-to-modbus-shm "$@"
-#b363b0629617bc0234a6a8214eabbb40ffd52dcb29a2c1e158e52937a20e439c  -
+#b363b0629617bc0234a6a8214eabbb40ffd52dcb29a2c1e158e52937a20e439c

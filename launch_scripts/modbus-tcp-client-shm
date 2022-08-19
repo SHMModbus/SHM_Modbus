@@ -1,3 +1,3 @@
 #!/bin/bash
 flatpak run network.koesling.shm-modbus modbus-tcp-client-shm "$@"
-#065cd8c334966b57d0720cbe2a3bd15769fea1894471887ca21d24e76f1e8022  -
+#065cd8c334966b57d0720cbe2a3bd15769fea1894471887ca21d24e76f1e8022

@@ -44,7 +44,7 @@
         <binary>write-shm</binary>
         <binary>stdin-to-modbus-shm</binary>
         <binary>shared-mem-random</binary>
-        <binary>test</binary>
     </provides>
+    <launchable type="desktop-id">network.koesling.shm-modbus.desktop</launchable>
     <content_rating type="oars-1.1" />
 </component>
