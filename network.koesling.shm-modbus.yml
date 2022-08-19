@@ -6,7 +6,6 @@ command: shm-modbus
 finish-args:
   - --device=shm
   - --share=network
-  - --filesystem=home
 modules:
   - name: launch_script
     buildsystem: simple
@@ -143,16 +142,3 @@ modules:
         path: network.koesling.shm-modbus_256.png
       - type: file
         path: network.koesling.shm-modbus.desktop
-
-  - name: launch_scripts
-    buildsystem: simple
-    build-commands:
-      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts dump-shm
-      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts write-shm
-      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts modbus-rtu-client-shm
-      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts modbus-tcp-client-shm
-      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts shared-mem-random
-      - install -D -m 755 -t ${FLATPAK_DEST}/bin/scripts stdin-to-modbus-shm
-    sources:
-      - type: dir
-        path: launch_scripts

@@ -37,8 +37,6 @@ if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     echo "  options:"
     echo "    --guided                  start in guided mode"
     echo "    -h --help                 show this message"
-    echo "    --install                 copy scripts to ~/bin to start the Modbus tools by calling their name"
-    echo "    --uninstall               remove scripts from ~/bin"
     echo "    --version                 show version of this script"
     echo "    --version-all             show version of all Mosbus tools"
     echo "    --license                 print license information for this script"
@@ -101,45 +99,6 @@ if [ "$command" = "--license-all" ]; then
         echo ""
         echo ""
     done
-    exit 0
-fi
-
-if [ "$command" = "--install" ]; then
-    
-
-    for cmd in "${EXEC_COMMANDS[@]}"
-    do
-        target="$HOME/bin/$cmd"
-
-        if [ -e "$target" ]; then
-            echo "File exists: $target"
-            continue
-        fi
-
-        install -D -m755 "$SCRIPTPATH/scripts/$cmd" "$target"
-    done    
-
-    echo "Installation completed. Enshure that \$HOME/bin is in your PATH environment variable."
-
-    exit 0
-fi
-
-if [ "$command" = "--uninstall" ]; then
-    for cmd in "${EXEC_COMMANDS[@]}"
-    do
-        # TODO use sha256sum to check if the file is the one that was installed by this script
-
-        target=$HOME/bin/$cmd
-
-        sha256_file=$(tail -n 1 $target | cut -d '#' -f 2)
-        sha256_gen=$(head -n 2 $target | sha256sum | cut -d ' ' -f 1)
-
-        if [ "$sha256_file" = "$sha256_gen" ]; then
-            rm -f "$target"
-        else
-            echo "It seems that $target was not installed by this script. Therefore, it is not removed."
-        fi
-    done  
     exit 0
 fi
 
