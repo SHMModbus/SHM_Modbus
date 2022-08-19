@@ -2,6 +2,8 @@
 
 VERSION="1.0.0"
 
+SLEEP_TIME=3
+
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself/4774063
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
@@ -152,7 +154,6 @@ done
 if [ "$command" = "--guided" ]; then
     while true
     do
-        echo ""
         echo "The following applications can be executed:"
         echo "  Guided: This script will guide you through the command line arguments:"
         echo "     1) modbus-tcp-client-shm"
@@ -181,7 +182,31 @@ if [ "$command" = "--guided" ]; then
 
         elif [ "$user_input" = "99" ]; then              # help
             # TODO
-            echo "Help Text."
+            echo ""
+            echo "modbus-tcp-client-shm:"
+            echo "    This application is a Modbus TCP client that stores the content of its registers in shared memory."
+            echo ""
+            echo "modbus-rtu-client-shm:"
+            echo "    This application is a Modbus RTU client that stores the content of its registers in shared memory."
+            echo ""
+            echo "dump-shm:"
+            echo "    This application outputs the content of a shared memory to stdout."
+            echo "    It for example can be used to write the content to a file or to visualize it with a hexdump."
+            echo ""
+            echo "write-shm:"
+            echo "    This application writes the data it reads from stdin to a shared memory."
+            echo "    It can be used to load a shared memory from any file (e.g. /dev/zero, /dev/random, ...)."
+            echo ""
+            echo "shared-mem-random:"
+            echo "    This application cyclically writes random values to a shared memory."
+            echo ""
+            echo "stdin-to-modbus-shm:"
+            echo "    This application reads commands from stdin and writes them to the shared memory created by one of the shared memory"
+            echo "    modbus clients (TCP/RTU)."
+            echo ""
+            read -p "press return to continue..." dummy
+            echo ""
+            continue
 
         elif [ "$user_input" = "1" ]; then              # modbus-tcp-client-shm guided
             guided_modbus_tcp_client_shm $SCRIPTPATH
@@ -221,6 +246,8 @@ if [ "$command" = "--guided" ]; then
 
         else
             >&2 echo "invalid input. try again. use 0 to exit."
+            sleep $SLEEP_TIME
+            echo ""
             continue
         fi
 

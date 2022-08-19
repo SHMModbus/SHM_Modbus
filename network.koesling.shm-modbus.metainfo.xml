@@ -34,7 +34,7 @@
     </keywords>
     <url type="homepage">https://nikolask-source.github.io/shm_modbus/</url>
     <releases>
-        <release version="0.0.1" date="2022-08-12"/>
+        <release version="1.0.0" date="2022-08-19"/>
     </releases>
     <provides>
         <binary>modbus-shm</binary>
