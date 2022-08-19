@@ -47,4 +47,10 @@
     </provides>
     <launchable type="desktop-id">network.koesling.shm-modbus.desktop</launchable>
     <content_rating type="oars-1.1" />
+    <screenshots>
+        <screenshot type="default">
+            <caption>guided command launcher</caption>
+            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/shm-modbus-screenshot.png</image>
+        </screenshot>
+    </screenshots>
 </component>
