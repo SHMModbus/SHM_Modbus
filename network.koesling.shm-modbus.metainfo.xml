@@ -32,7 +32,7 @@
         <keyword translate="no">SharedMemory</keyword>
         <keyword translate="no">shm</keyword>
     </keywords>
-    <url type="homepage">https://nikolask-source.github.io/shm_modbus/</url>
+    <url type="homepage">https://nikolask-source.github.io/SHM_Modbus/</url>
     <releases>
         <release version="1.0.0" date="2022-08-19"/>
     </releases>
