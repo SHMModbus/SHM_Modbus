@@ -2,7 +2,7 @@
 
 VERSION="1.0.0"
 
-SLEEP_TIME=3
+SLEEP_TIME=2
 
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself/4774063
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
@@ -154,31 +154,33 @@ done
 if [ "$command" = "--guided" ]; then
     while true
     do
-        echo "The following applications can be executed:"
-        echo "  Guided: This script will guide you through the command line arguments:"
-        echo "     1) modbus-tcp-client-shm"
-        echo "     2) modbus-rtu-client-shm"
-        echo "     3) dump-shm"
-        echo "     4) write-shm"
-        echo "     5) shared-mem-random"
-        echo "     6) stdin-to-modbus-shm"
-        echo "  Manual: specify the command line arguments manually:"
-        echo "    11) modbus-tcp-client-shm"
-        echo "    12) modbus-rtu-client-shm"
-        echo "    13) dump-shm"
-        echo "    14) write-shm"
-        echo "    15) shared-mem-random"
-        echo "    16) stdin-to-modbus-shm"
-        echo "  Other:"
-        echo "     0) exit"
-        echo "    99) output short information text for each possible application"
+        echo ">>>The following applications can be executed:"
+        echo ">>>  Guided: This script will guide you through the command line arguments:"
+        echo ">>>     1) modbus-tcp-client-shm"
+        echo ">>>     2) modbus-rtu-client-shm"
+        echo ">>>     3) dump-shm"
+        echo ">>>     4) write-shm"
+        echo ">>>     5) shared-mem-random"
+        echo ">>>     6) stdin-to-modbus-shm"
+        echo ">>>  Manual: specify the command line arguments manually:"
+        echo ">>>    11) modbus-tcp-client-shm"
+        echo ">>>    12) modbus-rtu-client-shm"
+        echo ">>>    13) dump-shm"
+        echo ">>>    14) write-shm"
+        echo ">>>    15) shared-mem-random"
+        echo ">>>    16) stdin-to-modbus-shm"
+        echo ">>>  Other:"
+        echo ">>>     0) exit"
+        echo ">>>    20) list all shared memories"
+        echo ">>>    99) output short information text for each possible application"
 
         # TODO user input
-        read -p "Enter command number: " user_input
+        read -p ">>>Enter command number: " user_input
+        echo ""
 
         if [ "$user_input" = "0" ]; then                # exit
             # Do nothing
-            true
+            break
 
         elif [ "$user_input" = "99" ]; then              # help
             # TODO
@@ -203,10 +205,9 @@ if [ "$command" = "--guided" ]; then
             echo "stdin-to-modbus-shm:"
             echo "    This application reads commands from stdin and writes them to the shared memory created by one of the shared memory"
             echo "    modbus clients (TCP/RTU)."
+
             echo ""
             read -p "press return to continue..." dummy
-            echo ""
-            continue
 
         elif [ "$user_input" = "1" ]; then              # modbus-tcp-client-shm guided
             guided_modbus_tcp_client_shm $SCRIPTPATH
@@ -244,6 +245,22 @@ if [ "$command" = "--guided" ]; then
         elif [ "$user_input" = "16" ]; then             # stdin-to-modbus-shm manual
             manual_stdin_to_modbus_shm $SCRIPTPATH
 
+        elif [ "$user_input" = "20" ]; then             # list shared memories
+            shms=$(ls /dev/shm)
+
+            if [ "$shms" = "" ]; then
+                echo "no open shared memoy."
+            else
+                echo "Open shared memories:"
+                for shm in ${shms}
+                do
+                    echo "  - $shm"
+                done
+            fi
+            
+            sleep $SLEEP_TIME
+            echo ""
+
         else
             >&2 echo "invalid input. try again. use 0 to exit."
             sleep $SLEEP_TIME
@@ -251,7 +268,7 @@ if [ "$command" = "--guided" ]; then
             continue
         fi
 
-        break;
+        echo ""
     done
 
     exit 0;
