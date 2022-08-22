@@ -167,7 +167,9 @@ function guided_modbus_tcp_client_shm {
 
     #execute
     echo "Executing..."
+    trap "" INT QUIT TSTP
     $scriptpath/modbus-tcp-client-shm --ip $listen_ip --port $port --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $reconnect $monitor
+    trap - INT QUIT TSTP
 }
 
 function guided_modbus_rtu_client_shm {
@@ -275,7 +277,9 @@ function guided_modbus_rtu_client_shm {
 
     #execute
     echo "Executing..."
+    trap "" INT QUIT TSTP
     $scriptpath/modbus-tcp-client-shm --device $device --id $client_id --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $monitor
+    trap - INT QUIT TSTP
 }
 
 function guided_dump_shm {
@@ -322,13 +326,19 @@ function guided_dump_shm {
         done
 
         echo "Executing..."
+        trap "" INT QUIT TSTP
         $scriptpath/dump-shm $shm_name > $fname
+        trap - INT QUIT TSTP
     elif [ "$action" = "hex" ]; then
         echo "Executing..."
+        trap "" INT QUIT TSTP
         $scriptpath/dump-shm $shm_name | hexdump -C -v | more
+        trap - INT QUIT TSTP
     elif [ "$action" = "raw" ]; then
         echo "Executing..."
+        trap "" INT QUIT TSTP
         $scriptpath/dump-shm $shm_name
+        trap - INT QUIT TSTP
     fi
 }
 
@@ -385,12 +395,13 @@ function guided_write_shm {
     done
 
     echo "Executing..."
-
+    trap "" INT QUIT TSTP
     if [ "$fname" = "" ]; then
         $scriptpath/write-shm -n $shm_name $repeat $invert
     else
         $scriptpath/write-shm -n $shm_name $repeat $invert < $fname
     fi
+    trap - INT QUIT TSTP
 }
 
 function guided_shared_mem_random {
@@ -488,7 +499,9 @@ function guided_shared_mem_random {
     done
 
     echo "Executing..."
+    trap "" INT QUIT TSTP
     $scriptpath/shared-mem-random -a $allignment -m $mask -n $shm_name -i $interval -l $limit
+    trap - INT QUIT TSTP
 }
 
 function guided_stdin_to_modbus_shm {
@@ -518,10 +531,12 @@ function guided_stdin_to_modbus_shm {
     done
 
     echo "Executing..."
+    trap "" INT QUIT TSTP
     if [ "$fname" = "" ]; then
         $scriptpath/stdin-to-modbus-shm -n $name_prefix
     else
         $scriptpath/stdin-to-modbus-shm -n $name_prefix < $fname
     fi
+    trap - INT QUIT TSTP
 }
 

@@ -179,39 +179,51 @@ if [ "$command" = "--guided" ]; then
 
         elif [ "$user_input" = "1" ]; then              # modbus-tcp-client-shm guided
             guided_modbus_tcp_client_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "2" ]; then              # modbus-rtu-client-shm guided
             guided_modbus_rtu_client_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "3" ]; then              # dump-shm guided
             guided_dump_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "4" ]; then              # write-shm guided
             guided_write_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "5" ]; then              # shared-mem-random guided
             guided_shared_mem_random $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "6" ]; then              # stdin-to-modbus-shm guided
             guided_stdin_to_modbus_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "11" ]; then             # modbus-tcp-client-shm manual
             manual_modbus_tcp_client_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "12" ]; then             # modbus-rtu-client-shm manual
             manual_modbus_rtu_client_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "13" ]; then             # dump-shm manual
             manual_dump_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "14" ]; then             # write-shm manual
             manual_write_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "15" ]; then             # shared-mem-random manual
             manual_shared_mem_random $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "16" ]; then             # stdin-to-modbus-shm manual
             manual_stdin_to_modbus_shm $SCRIPTPATH
+            break
 
         elif [ "$user_input" = "20" ]; then             # list shared memories
             shms=$(ls /dev/shm)
