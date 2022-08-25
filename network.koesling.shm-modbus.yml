@@ -23,7 +23,6 @@ modules:
         path: manual-commands.sh
 
   - name: Modbus_TCP_client_shm
-    buildsystem: simple
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
