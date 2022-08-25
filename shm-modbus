@@ -26,6 +26,8 @@ if [[ ( "$arg_count" < 1 ) ]] ; then
     exit 64
 fi
 
+trap "exit 0" INT TERM
+
 command=$1
 
 if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
@@ -114,8 +116,9 @@ fi
 for cmd in "${EXEC_COMMANDS[@]}"
 do
     if [ "$command" = "$cmd" ]; then
+        trap "" INT TERM
         $SCRIPTPATH/$command "${@:2}"
-        exit 0
+        exit $?
     fi
 done
 

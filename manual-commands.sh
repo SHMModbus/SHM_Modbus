@@ -49,13 +49,11 @@ function manual_modbus_tcp_client_shm {
     fi
 
 
-    trap "" INT QUIT TSTP
     if [ "$redir" = "" ]; then
         $scriptpath/modbus-tcp-client-shm ${args}
     else
         $scriptpath/modbus-tcp-client-shm ${args} > $redir
     fi
-    trap - INT QUIT TSTP
 }
 
 function manual_modbus_rtu_client_shm {
@@ -73,13 +71,11 @@ function manual_modbus_rtu_client_shm {
         return
     fi
 
-    trap "" INT QUIT TSTP
     if [ "$redir" = "" ]; then
         $scriptpath/modbus-rtu-client-shm ${args}
     else
         $scriptpath/modbus-rtu-client-shm ${args} > $redir
     fi
-    trap - INT QUIT TSTP
 }
 
 function manual_dump_shm {
@@ -97,13 +93,11 @@ function manual_dump_shm {
         return
     fi
 
-    trap "" INT QUIT TSTP
     if [ "$redir" = "" ]; then
         $scriptpath/dump-shm ${args}
     else
         $scriptpath/dump-shm ${args} > $redir
     fi
-    trap - INT QUIT TSTP
 }
 
 function manual_write_shm {
@@ -127,7 +121,6 @@ function manual_write_shm {
         return
     fi
 
-    trap "" INT QUIT TSTP
     if [ "$redir" = "" ]; then
         if [ "$input" == "" ]; then
             $scriptpath/write-shm ${args}
@@ -141,7 +134,6 @@ function manual_write_shm {
             $scriptpath/write-shm ${args} < $input > $redir
         fi
     fi
-    trap - INT QUIT TSTP
 }
 
 function manual_shared_mem_random {
@@ -153,9 +145,7 @@ function manual_shared_mem_random {
         return
     fi
 
-    trap "" INT QUIT TSTP
     $scriptpath/shared-mem-random ${args}
-    trap - INT QUIT TSTP
 }
 
 function manual_stdin_to_modbus_shm {
@@ -173,12 +163,10 @@ function manual_stdin_to_modbus_shm {
         return
     fi
 
-    trap "" INT QUIT TSTP
     if [ "$input" == "" ]; then
         $scriptpath/stdin-to-modbus-shm ${args}
     else
         $scriptpath/stdin-to-modbus-shm ${args} < $input
     fi
-    trap - INT QUIT TSTP
 }
 
