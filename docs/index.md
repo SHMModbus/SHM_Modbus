@@ -26,8 +26,8 @@ flatpak install network.koesling.shm-modbus
 
 ### Launch scripts
 Since the execution of the individual tools via the flatpak is uncomfortable due to the long names, launch scripts are available.
-- [Long commands](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969)
-- [Short commands](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641)
+- [Long commands](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969) ([zip download](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969/archive/ca0e97323feadad82a1063130b803ebee65dda20.zip))
+- [Short commands](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641) ([zip download](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641/archive/e8d586d47328eb5f952746d5231eae4ff6bd0039.zip))
 
 If these are stored in a directory that is in the PATH environment variable, they can be used to start the tools.
 
