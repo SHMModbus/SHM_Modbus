@@ -12,9 +12,54 @@ It contains the following tools:
   - [RTU](https://nikolask-source.github.io/modbus_rtu_client_shm/)
   - [TCP](https://nikolask-source.github.io/modbus_tcp_client_shm/)
 - Modbus Shared Memory Tools:
-  - [STDIN to Modbus](https://nikolask-source.github.io/stdin_to_modbus_shm/)
+  - [STDIN to Modbus SHM](https://nikolask-source.github.io/stdin_to_modbus_shm/)
 
 In addition, a start script is included, which also provides a guided mode.
+
+## Install
+The application is available as flatpak and published on flathub as ```network.koesling.dump-shm```.
+
+The installation can be done with the following command: 
+```
+flatpak install network.koesling.shm-modbus
+```
+
+### Launch scripts
+Since the execution of the individual tools via the flatpak is uncomfortable due to the long names, launch scripts are available.
+- [Long commands](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969)
+- [Short commands](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641)
+
+If these are stored in a directory that is in the PATH environment variable, they can be used to start the tools.
+
+| Tool | Long Command | Short Command |
+| - | - | - |
+| Modbus TCP Client | modbus-tcp-client-shm | mbtcp |
+| Modbus RTU Client | modbus-rtu-client-shm | mbrtu |
+| STDIN to Modbus SHM | stdin-to-modbus-shm | stdin2mb |
+| Shared Memory Dump | dump-shm | dshm |
+| Shared Memory Write | write-shm | wshm |
+| Shared Memory Random | shared-mem-random | shmrnd |
+
+## Use
+
+The primary use case of this application is the use of the individual tools from the command line.
+A desktop launcher with a guided mode is available, but it only provides limited functionality.
+
+### Steps for Simulating a Modbus Client.
+
+1. Start the appropriate Modbus client ([modbus-tcp-client-shm](https://nikolask-source.github.io/modbus_tcp_client_shm/) or [modbus-rtu-client-shm](https://nikolask-source.github.io/modbus_rtu_client_shm/)).
+Information about the configuration of the clients can be found in their documentation.
+([TCP](https://nikolask-source.github.io/modbus_tcp_client_shm/) / [RTU](https://nikolask-source.github.io/modbus_rtu_client_shm/))
+
+2. Use the Tools to Read and Manipulate:
+  - [dump-shm](https://nikolask-source.github.io/dump_shm/) can be used to read the content of a shared memory. 
+  Especially useful in connection with ```hexdump```.
+  - [write-shm](https://nikolask-source.github.io/write_shm/) can be used to write the content of a shared memory.
+  - [shared-mem-random](https://nikolask-source.github.io/shared_mem_random/) is a tool to write random values to a shared memory
+  - [stdin-to-modbus-shm](https://nikolask-source.github.io/stdin_to_modbus_shm/) is a tool to write values to the modbus registers. It can handle various data types and endiannes. 
+
+## Common Problems
+A list of common problems can be found [here](common_problems.md).
 
 ## License
 
