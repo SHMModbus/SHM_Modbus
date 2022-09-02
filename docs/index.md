@@ -17,7 +17,7 @@ It contains the following tools:
 In addition, a start script is included, which also provides a guided mode.
 
 ## Install
-The application is available as flatpak and published on flathub as ```network.koesling.dump-shm```.
+The application is available as flatpak and published on flathub as ```network.koesling.shm-modbus```.
 
 The installation can be done with the following command: 
 ```
