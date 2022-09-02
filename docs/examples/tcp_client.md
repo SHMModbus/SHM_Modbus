@@ -25,7 +25,7 @@ This starts the client with the following properties.:
 - The Client serves all requests using the four shared memories.
 
 Command line options to manipulate the clients properties:
-- do not terminate if the Master disconnects: 
+- do not terminate if the Modbus Server disconnects: 
 ```
 -r
 ```
@@ -59,7 +59,7 @@ The register suffixes will always be present.
 ```
 -m
 ```
-- specify ip via which the master can connect:
+- specify ip via which the Modbus Server can connect:
 ```
 -i <ip>
 ```

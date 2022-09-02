@@ -40,7 +40,7 @@ ao:8:pi:f64l
 ao:0x10:42.24:f32b
 ```
 
-> **NOTE** The endianness refers to the layout of the data in the shared memory and may differ from the Modbus master's definition of the endianness.
+> **NOTE** The endianness refers to the layout of the data in the shared memory and may differ from the Modbus servers's definition of the endianness.
 
 ##### passthrough
 The option ```--passthrough``` can be used to output all executed commands to stdout. 

@@ -98,7 +98,7 @@ function guided_modbus_tcp_client_shm {
 
     # reconnect
     while true; do
-        read -p "Terminate if master disconnects: [y/N] " yn
+        read -p "Terminate if Modbus server disconnects: [y/N] " yn
         if [ "$yn" == "" ]; then
             yn="N"
         fi
