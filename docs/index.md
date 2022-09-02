@@ -48,6 +48,7 @@ A desktop launcher with a guided mode is available, but it only provides limited
 Usage Examples (all examples assume that the lunch scripts (long commands) are installed.):
 - [Modbus TCP client](examples/tcp_client.md)
 - [Shared Memory Dump](examples/dump_shm.md)
+- [Shared Memory Write](examples/write_shm.md)
 
 ### Steps for Simulating a Modbus Client.
 

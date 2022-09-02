@@ -80,6 +80,7 @@ This option is like using ```-s``` for all client ids.
 ## 3. Use (Modbus) Shared Memory Tools to Read and Manipulate the Shared Memory
 
 - [Dump Shared Memory](dump_shm.md)
+- [Write Shared Memory](write_shm.md)
 
 ## 4. Clenup
 If port redirection is used, the following command should be executed to disable the port redirection after closing the client. *change the ports according to your configuration.*
