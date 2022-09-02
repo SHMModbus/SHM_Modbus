@@ -45,6 +45,9 @@ If these are stored in a directory that is in the PATH environment variable, the
 The primary use case of this application is the use of the individual tools from the command line.
 A desktop launcher with a guided mode is available, but it only provides limited functionality.
 
+Usage Examples (all examples assume that the lunch scripts (long commands) are installed.):
+- [Modbus TCP client](examples/tcp_client.md)
+
 ### Steps for Simulating a Modbus Client.
 
 1. Start the appropriate Modbus client ([modbus-tcp-client-shm](https://nikolask-source.github.io/modbus_tcp_client_shm/) or [modbus-rtu-client-shm](https://nikolask-source.github.io/modbus_rtu_client_shm/)).
