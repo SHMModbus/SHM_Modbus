@@ -81,7 +81,8 @@ This option is like using ```-s``` for all client ids.
 
 - [Shared Memory Dump](dump_shm.md)
 - [Shared Memory Write](write_shm.md)
-- [Shared Memory Random](examples/shm_random.md)
+- [Shared Memory Random](shm_random.md)
+- [STDIN to Modbus Shared Memory](stdin_to_shm.md)
 
 ## 4. Clenup
 If port redirection is used, the following command should be executed to disable the port redirection after closing the client. *change the ports according to your configuration.*

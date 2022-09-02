@@ -50,6 +50,7 @@ Usage Examples (all examples assume that the lunch scripts (long commands) are i
 - [Shared Memory Dump](examples/dump_shm.md)
 - [Shared Memory Write](examples/write_shm.md)
 - [Shared Memory Random](examples/shm_random.md)
+- [STDIN to Modbus Shared Memory](examples/stdin_to_shm.md)
 
 ### Steps for Simulating a Modbus Client.
 
