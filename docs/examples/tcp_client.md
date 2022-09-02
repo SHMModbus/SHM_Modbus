@@ -67,7 +67,7 @@ The register suffixes will always be present.
 It is possible to supply multiple ids separated with a comma.
 It is also possible to use this option multiple times.  
 Using this option results in the creation of additional shared memories for each specified id in addition to the normally created Modbus shared memories.
-These shared memories have the corresponding client id in their name (as a hex value). E.g ```modbus_0f_DO```
+These shared memories have the corresponding client id in their name (as a hex value). E.g ```modbus_0f_DO``` or ```modbus_a2_AI```.
 ```
 -s <id>
 ```
@@ -79,8 +79,9 @@ This option is like using ```-s``` for all client ids.
 
 ## 3. Use (Modbus) Shared Memory Tools to Read and Manipulate the Shared Memory
 
-- [Dump Shared Memory](dump_shm.md)
-- [Write Shared Memory](write_shm.md)
+- [Shared Memory Dump](dump_shm.md)
+- [Shared Memory Write](write_shm.md)
+- [Shared Memory Random](examples/shm_random.md)
 
 ## 4. Clenup
 If port redirection is used, the following command should be executed to disable the port redirection after closing the client. *change the ports according to your configuration.*

@@ -49,6 +49,7 @@ Usage Examples (all examples assume that the lunch scripts (long commands) are i
 - [Modbus TCP client](examples/tcp_client.md)
 - [Shared Memory Dump](examples/dump_shm.md)
 - [Shared Memory Write](examples/write_shm.md)
+- [Shared Memory Random](examples/shm_random.md)
 
 ### Steps for Simulating a Modbus Client.
 
