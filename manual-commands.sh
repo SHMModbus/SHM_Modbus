@@ -48,11 +48,20 @@ function manual_modbus_tcp_client_shm {
         return
     fi
 
+    if [[ -x "$scriptpath/modbus-tcp-client-shm" ]]; then
+        exe="$scriptpath/modbus-tcp-client-shm"
+    elif [[ -x "/bin/modbus-tcp-client-shm" ]]; then
+        exe="/bin/modbus-tcp-client-shm"
+    elif [[ -x "/usr/bin/modbus-tcp-client-shm" ]]; then
+        exe="/usr/bin/modbus-tcp-client-shm"
+    else
+        exe="modbus-tcp-client-shm"
+    fi
 
     if [ "$redir" = "" ]; then
-        $scriptpath/modbus-tcp-client-shm ${args}
+        $exe ${args}
     else
-        $scriptpath/modbus-tcp-client-shm ${args} > $redir
+        $exe ${args} > $redir
     fi
 }
 
@@ -71,10 +80,20 @@ function manual_modbus_rtu_client_shm {
         return
     fi
 
-    if [ "$redir" = "" ]; then
-        $scriptpath/modbus-rtu-client-shm ${args}
+    if [[ -x "$scriptpath/modbus-rtu-client-shm" ]]; then
+        exe="$scriptpath/modbus-rtu-client-shm"
+    elif [[ -x "/bin/modbus-rtu-client-shm" ]]; then
+        exe="/bin/modbus-rtu-client-shm"
+    elif [[ -x "/usr/bin/modbus-rtu-client-shm" ]]; then
+        exe="/usr/bin/modbus-rtu-client-shm"
     else
-        $scriptpath/modbus-rtu-client-shm ${args} > $redir
+        exe="modbus-rtu-client-shm"
+    fi
+
+    if [ "$redir" = "" ]; then
+        $exe ${args}
+    else
+        $exe ${args} > $redir
     fi
 }
 
@@ -93,10 +112,20 @@ function manual_dump_shm {
         return
     fi
 
-    if [ "$redir" = "" ]; then
-        $scriptpath/dump-shm ${args}
+    if [[ -x "$scriptpath/dump-shm" ]]; then
+        exe="$scriptpath/dump-shm"
+    elif [[ -x "/bin/dump-shm" ]]; then
+        exe="/bin/dump-shm"
+    elif [[ -x "/usr/bin/dump-shm" ]]; then
+        exe="/usr/bin/dump-shm"
     else
-        $scriptpath/dump-shm ${args} > $redir
+        exe="dump-shm"
+    fi
+
+    if [ "$redir" = "" ]; then
+        $exe ${args}
+    else
+        $exe ${args} > $redir
     fi
 }
 
@@ -121,17 +150,27 @@ function manual_write_shm {
         return
     fi
 
+    if [[ -x "$scriptpath/write-shm" ]]; then
+        exe="$scriptpath/write-shm"
+    elif [[ -x "/bin/write-shm" ]]; then
+        exe="/bin/write-shm"
+    elif [[ -x "/usr/bin/write-shm" ]]; then
+        exe="/usr/bin/write-shm"
+    else
+        exe="write-shm"
+    fi
+
     if [ "$redir" = "" ]; then
         if [ "$input" == "" ]; then
-            $scriptpath/write-shm ${args}
+            $exe ${args}
         else
-            $scriptpath/write-shm ${args} < $input
+            $exe ${args} < $input
         fi
     else
         if [ "$input" == "" ]; then
-            $scriptpath/write-shm ${args} > $redir
+            $exe ${args} > $redir
         else
-            $scriptpath/write-shm ${args} < $input > $redir
+            $exe ${args} < $input > $redir
         fi
     fi
 }
@@ -145,7 +184,17 @@ function manual_shared_mem_random {
         return
     fi
 
-    $scriptpath/shared-mem-random ${args}
+    if [[ -x "$scriptpath/shared-mem-random" ]]; then
+        exe="$scriptpath/shared-mem-random"
+    elif [[ -x "/bin/shared-mem-random" ]]; then
+        exe="/bin/shared-mem-random"
+    elif [[ -x "/usr/bin/shared-mem-random" ]]; then
+        exe="/usr/bin/shared-mem-random"
+    else
+        exe="shared-mem-random"
+    fi
+
+    $exe ${args}
 }
 
 function manual_stdin_to_modbus_shm {
@@ -163,10 +212,20 @@ function manual_stdin_to_modbus_shm {
         return
     fi
 
-    if [ "$input" == "" ]; then
-        $scriptpath/stdin-to-modbus-shm ${args}
+    if [[ -x "$scriptpath/stdin-to-modbus-shm" ]]; then
+        exe="$scriptpath/stdin-to-modbus-shm"
+    elif [[ -x "/bin/stdin-to-modbus-shm" ]]; then
+        exe="/bin/stdin-to-modbus-shm"
+    elif [[ -x "/usr/bin/stdin-to-modbus-shm" ]]; then
+        exe="/usr/bin/stdin-to-modbus-shm"
     else
-        $scriptpath/stdin-to-modbus-shm ${args} < $input
+        exe="stdin-to-modbus-shm"
+    fi
+
+    if [ "$input" == "" ]; then
+        $exe ${args}
+    else
+        $exe ${args} < $input
     fi
 }
 

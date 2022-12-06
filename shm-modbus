@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1.0.2"
+VERSION="1.0.3"
 
 SLEEP_TIME=2
 
@@ -62,7 +62,17 @@ if [ "$command" = "--version-all" ]; then
     echo "modbus-shm $VERSION"
     for cmd in "${EXEC_COMMANDS[@]}"
     do
-        $SCRIPTPATH/$cmd --version
+        if [[ -x "$SCRIPTPATH/$cmd" ]]; then
+            $SCRIPTPATH/$cmd --version
+        elif [[ -x "/bin/$cmd" ]]; then
+            /bin/$cmd --version
+        elif [[ -x "/usr/bin/$cmd" ]]; then
+            /usr/bin/$cmd --version
+        else
+           # try to execute from path
+           $cmd --version
+        fi
+        
     done
     exit 0
 fi
@@ -106,7 +116,16 @@ if [ "$command" = "--license-all" ]; then
     for cmd in "${EXEC_COMMANDS[@]}"
     do
         echo "====================> $cmd <===================="
-        $SCRIPTPATH/$cmd --license
+        if [[ -x "$SCRIPTPATH/$cmd" ]]; then
+            $SCRIPTPATH/$cmd --license
+        elif [[ -x "/bin/$cmd" ]]; then
+            /bin/$cmd --license
+        elif [[ -x "/usr/bin/$cmd" ]]; then
+            /usr/bin/$cmd --license
+        else
+           # try to execute from path
+           $cmd --license
+        fi
         echo ""
         echo ""
     done
@@ -117,7 +136,18 @@ for cmd in "${EXEC_COMMANDS[@]}"
 do
     if [ "$command" = "$cmd" ]; then
         trap "" INT TERM
-        $SCRIPTPATH/$command "${@:2}"
+
+        if [[ -x "$SCRIPTPATH/$command" ]]; then
+            $SCRIPTPATH/$command "${@:2}"
+        elif [[ -x "/bin/$cmd" ]]; then
+            /bin/$command "${@:2}"
+        elif [[ -x "/usr/bin/$cmd" ]]; then
+            /usr/bin/$command "${@:2}"
+        else
+           # try to execute from path
+           $command "${@:2}"
+        fi
+
         exit $?
     fi
 done

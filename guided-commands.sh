@@ -167,7 +167,16 @@ function guided_modbus_tcp_client_shm {
 
     #execute
     echo "Executing..."
-    $scriptpath/modbus-tcp-client-shm --ip $listen_ip --port $port --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $reconnect $monitor
+    if [[ -x "$scriptpath/modbus-tcp-client-shm" ]]; then
+        exe="$scriptpath/modbus-tcp-client-shm"
+    elif [[ -x "/bin/modbus-tcp-client-shm" ]]; then
+        exe="/bin/modbus-tcp-client-shm"
+    elif [[ -x "/usr/bin/modbus-tcp-client-shm" ]]; then
+        exe="/usr/bin/modbus-tcp-client-shm"
+    else
+        exe="modbus-tcp-client-shm"
+    fi
+    $exe --ip $listen_ip --port $port --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $reconnect $monitor
 }
 
 function guided_modbus_rtu_client_shm {
@@ -275,7 +284,16 @@ function guided_modbus_rtu_client_shm {
 
     #execute
     echo "Executing..."
-    $scriptpath/modbus-tcp-client-shm --device $device --id $client_id --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $monitor
+    if [[ -x "$scriptpath/modbus-rtu-client-shm" ]]; then
+        exe="$scriptpath/modbus-rtu-client-shm"
+    elif [[ -x "/bin/modbus-rtu-client-shm" ]]; then
+        exe="/bin/modbus-rtu-client-shm"
+    elif [[ -x "/usr/bin/modbus-rtu-client-shm" ]]; then
+        exe="/usr/bin/modbus-rtu-client-shm"
+    else
+        exe="modbus-rtu-client-shm"
+    fi
+    $exe --device $device --id $client_id --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $monitor
 }
 
 function guided_dump_shm {
@@ -311,6 +329,16 @@ function guided_dump_shm {
         echo "invlaid action. Try again."
     done
 
+    if [[ -x "$scriptpath/dump-shm" ]]; then
+        exe="$scriptpath/dump-shm"
+    elif [[ -x "/bin/dump-shm" ]]; then
+        exe="/bin/dump-shm"
+    elif [[ -x "/usr/bin/dump-shm" ]]; then
+        exe="/usr/bin/dump-shm"
+    else
+        exe="dump-shm"
+    fi
+
     if [ "$action" = "file" ]; then
         while true; do
             read -p "Name of the dump file: " fname
@@ -322,13 +350,13 @@ function guided_dump_shm {
         done
 
         echo "Executing..."
-        $scriptpath/dump-shm $shm_name > $fname
+        $exe $shm_name > $fname
     elif [ "$action" = "hex" ]; then
         echo "Executing..."
-        $scriptpath/dump-shm $shm_name | hexdump -C -v | more
+        $exe $shm_name | hexdump -C -v | more
     elif [ "$action" = "raw" ]; then
         echo "Executing..."
-        $scriptpath/dump-shm $shm_name
+        $exe $shm_name
     fi
 }
 
@@ -385,10 +413,20 @@ function guided_write_shm {
     done
 
     echo "Executing..."
-    if [ "$fname" = "" ]; then
-        $scriptpath/write-shm -n $shm_name $repeat $invert
+    if [[ -x "$scriptpath/write-shm" ]]; then
+        exe="$scriptpath/write-shm"
+    elif [[ -x "/bin/write-shm" ]]; then
+        exe="/bin/write-shm"
+    elif [[ -x "/usr/bin/write-shm" ]]; then
+        exe="/usr/bin/write-shm"
     else
-        $scriptpath/write-shm -n $shm_name $repeat $invert < $fname
+        exe="write-shm"
+    fi
+
+    if [ "$fname" = "" ]; then
+        $exe -n $shm_name $repeat $invert
+    else
+        $exe -n $shm_name $repeat $invert < $fname
     fi
 }
 
@@ -487,7 +525,16 @@ function guided_shared_mem_random {
     done
 
     echo "Executing..."
-    $scriptpath/shared-mem-random -a $allignment -m $mask -n $shm_name -i $interval -l $limit
+    if [[ -x "$scriptpath/shared-mem-random" ]]; then
+        exe="$scriptpath/shared-mem-random"
+    elif [[ -x "/bin/shared-mem-random" ]]; then
+        exe="/bin/shared-mem-random"
+    elif [[ -x "/usr/bin/shared-mem-random" ]]; then
+        exe="/usr/bin/shared-mem-random"
+    else
+        exe="shared-mem-random"
+    fi
+    $exe -a $allignment -m $mask -n $shm_name -i $interval -l $limit
 }
 
 function guided_stdin_to_modbus_shm {
@@ -517,10 +564,19 @@ function guided_stdin_to_modbus_shm {
     done
 
     echo "Executing..."
-    if [ "$fname" = "" ]; then
-        $scriptpath/stdin-to-modbus-shm -n $name_prefix
+    if [[ -x "$scriptpath/stdin-to-modbus-shm" ]]; then
+        exe="$scriptpath/stdin-to-modbus-shm"
+    elif [[ -x "/bin/stdin-to-modbus-shm" ]]; then
+        exe="/bin/stdin-to-modbus-shm"
+    elif [[ -x "/usr/bin/stdin-to-modbus-shm" ]]; then
+        exe="/usr/bin/stdin-to-modbus-shm"
     else
-        $scriptpath/stdin-to-modbus-shm -n $name_prefix < $fname
+        exe="stdin-to-modbus-shm"
+    fi
+    if [ "$fname" = "" ]; then
+        $exe -n $name_prefix
+    else
+        $exe -n $name_prefix < $fname
     fi
 }
 
