@@ -42,8 +42,8 @@ modules:
       - mv /app/bin/signalgen /app/bin/signal-gen
     sources:
       - type: git
-        tag: v1.0.0
-        commit: 418bcede5f65faf8053cb1f764edf6f1b3b03c32
+        tag: v1.0.1
+        commit: 255e7f29204e195972d4c121f58514997b03a81a
         url: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
 
   - name: Modbus_RTU_client_shm
