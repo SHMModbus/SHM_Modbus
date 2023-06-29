@@ -13,6 +13,6 @@ jobs:
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       name: "Build"
       with:
-        bundle: dump-shm.flatpak
+        bundle: shm-modbus.flatpak
         manifest-path: network.koesling.shm-modbus.yml
         cache-key: flatpak-builder-${{ github.sha }}
