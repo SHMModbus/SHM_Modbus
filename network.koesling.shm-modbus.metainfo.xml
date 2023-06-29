@@ -17,6 +17,7 @@
                 <li>modbus-tcp-client-shm</li>
                 <li>modbus-rtu-client-shm</li>
                 <li>stdin-to-modbus-shm</li>
+                <li>signal-gen</li>
             </ol>
         </p>
     </description>
@@ -34,6 +35,7 @@
     </keywords>
     <url type="homepage">https://nikolask-source.github.io/SHM_Modbus/</url>
     <releases>
+        <release version="1.1.0" date="2023-06-29"/>
         <release version="1.0.4" date="2023-06-23"/>
         <release version="1.0.3" date="2022-12-06"/>
         <release version="1.0.2" date="2022-09-30"/>

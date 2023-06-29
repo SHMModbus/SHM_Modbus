@@ -35,6 +35,17 @@ modules:
         commit: 0d4ba00315ac62df9312fa94c2cdd6856c1be6c7
         url: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
 
+  - name: signal_gen
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app --no-deps .
+      - mv /app/bin/signalgen /app/bin/signal-gen
+    sources:
+      - type: git
+        tag: v1.0.0
+        commit: 418bcede5f65faf8053cb1f764edf6f1b3b03c32
+        url: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
+
   - name: Modbus_RTU_client_shm
     buildsystem: cmake-ninja
     config-opts:

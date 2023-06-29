@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1.0.4"
+VERSION="1.1.0"
 
 SLEEP_TIME=2
 
@@ -17,6 +17,7 @@ EXEC_COMMANDS=( \
     "write-shm" \
     "stdin-to-modbus-shm" \
     "shared-mem-random" \
+    "signal-gen" \
 )
 
 arg_count=$#
