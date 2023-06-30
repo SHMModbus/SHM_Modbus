@@ -54,6 +54,8 @@ function manual_modbus_tcp_client_shm {
         exe="/bin/modbus-tcp-client-shm"
     elif [[ -x "/usr/bin/modbus-tcp-client-shm" ]]; then
         exe="/usr/bin/modbus-tcp-client-shm"
+    elif [[ -x "/snap/bin/shm-modbus.modbus-tcp-client-shm" ]]; then
+        exe="/snap/bin/shm-modbus.modbus-tcp-client-shm"
     else
         exe="modbus-tcp-client-shm"
     fi
@@ -86,6 +88,8 @@ function manual_modbus_rtu_client_shm {
         exe="/bin/modbus-rtu-client-shm"
     elif [[ -x "/usr/bin/modbus-rtu-client-shm" ]]; then
         exe="/usr/bin/modbus-rtu-client-shm"
+    elif [[ -x "/snap/bin/shm-modbus.modbus-rtu-client-shm" ]]; then
+        exe="/snap/bin/shm-modbus.modbus-rtu-client-shm"
     else
         exe="modbus-rtu-client-shm"
     fi
@@ -118,6 +122,8 @@ function manual_dump_shm {
         exe="/bin/dump-shm"
     elif [[ -x "/usr/bin/dump-shm" ]]; then
         exe="/usr/bin/dump-shm"
+    elif [[ -x "/snap/bin/shm-modbus.dump-shm" ]]; then
+        exe="/snap/bin/shm-modbus.dump-shm"
     else
         exe="dump-shm"
     fi
@@ -156,6 +162,8 @@ function manual_write_shm {
         exe="/bin/write-shm"
     elif [[ -x "/usr/bin/write-shm" ]]; then
         exe="/usr/bin/write-shm"
+    elif [[ -x "/snap/bin/shm-modbus.write-shm" ]]; then
+        exe="/snap/bin/shm-modbus.write-shm"
     else
         exe="write-shm"
     fi
@@ -190,6 +198,8 @@ function manual_shared_mem_random {
         exe="/bin/shared-mem-random"
     elif [[ -x "/usr/bin/shared-mem-random" ]]; then
         exe="/usr/bin/shared-mem-random"
+    elif [[ -x "/snap/bin/shm-modbus.shared-mem-random" ]]; then
+        exe="/snap/bin/shm-modbus.shared-mem-random"
     else
         exe="shared-mem-random"
     fi
@@ -218,6 +228,8 @@ function manual_stdin_to_modbus_shm {
         exe="/bin/stdin-to-modbus-shm"
     elif [[ -x "/usr/bin/stdin-to-modbus-shm" ]]; then
         exe="/usr/bin/stdin-to-modbus-shm"
+    elif [[ -x "/snap/bin/shm-modbus.stdin-to-modbus-shm" ]]; then
+        exe="/snap/bin/shm-modbus.stdin-to-modbus-shm"
     else
         exe="stdin-to-modbus-shm"
     fi
@@ -229,3 +241,70 @@ function manual_stdin_to_modbus_shm {
     fi
 }
 
+function manual_signal_gen {
+    scriptpath=$1
+
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    redir=$(read_redirect_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    if [[ -x "$scriptpath/signal-gen" ]]; then
+        exe="$scriptpath/signal-gen"
+    elif [[ -x "/bin/signal-gen" ]]; then
+        exe="/bin/signal-gen"
+    elif [[ -x "/usr/bin/signal-gen" ]]; then
+        exe="/usr/bin/signal-gen"
+    elif [[ -x "/snap/bin/shm-modbus.signal-gen" ]]; then
+        exe="/snap/bin/shm-modbus.signal-gen"
+    else
+        exe="signal-gen"
+    fi
+
+    if [ "$redir" = "" ]; then
+        $exe ${args}
+    else
+        $exe ${args} > $redir
+    fi
+}
+
+function manual_wago_modbus_coupler_shm {
+    scriptpath=$1
+
+    args=$(read_command_line_args)
+    if [ "$args" = "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in argument"
+        return
+    fi
+
+    redir=$(read_redirect_file)
+    if [ $"redir" == "__INVALID__ARGS__" ]; then
+        echo "Invalid characters in redirection target"
+        return
+    fi
+
+    if [[ -x "$scriptpath/wago-modbus-coupler-shm" ]]; then
+        exe="$scriptpath/wago-modbus-coupler-shm"
+    elif [[ -x "/bin/wago-modbus-coupler-shm" ]]; then
+        exe="/bin/wago-modbus-coupler-shm"
+    elif [[ -x "/usr/bin/wago-modbus-coupler-shm" ]]; then
+        exe="/usr/bin/wago-modbus-coupler-shm"
+    elif [[ -x "/snap/bin/shm-modbus.wago-modbus-coupler-shm" ]]; then
+        exe="/snap/bin/shm-modbus.wago-modbus-coupler-shm"
+    else
+        exe="wago-modbus-coupler-shm"
+    fi
+
+    if [ "$redir" = "" ]; then
+        $exe ${args}
+    else
+        $exe ${args} > $redir
+    fi
+}
