@@ -17,3 +17,4 @@ It contains the following tools:
 
 ### Modbus Shared Memory Tools
 - [STDIN to Modbus](https://nikolask-source.github.io/stdin_to_modbus_shm/)
+- [Signal generator](https://github.com/NikolasK-source/shm-modbus-signal-gen/)
