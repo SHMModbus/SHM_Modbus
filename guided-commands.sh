@@ -66,9 +66,9 @@ function guided_modbus_tcp_client_shm {
     done
 
     # ip
-    read -p "Modbus TCP Client listen IP: [0.0.0.0] " listen_ip
+    read -p "Modbus TCP Client listen Host: [::] " listen_ip
     if  [ "$listen_ip" = "" ]; then
-        listen_ip="0.0.0.0"
+        listen_ip="::"
     fi 
 
     # name prefix
@@ -173,10 +173,12 @@ function guided_modbus_tcp_client_shm {
         exe="/bin/modbus-tcp-client-shm"
     elif [[ -x "/usr/bin/modbus-tcp-client-shm" ]]; then
         exe="/usr/bin/modbus-tcp-client-shm"
+    elif [[ -x "/snap/bin/shm-modbus.modbus-tcp-client-shm" ]]; then
+        exe="/snap/bin/shm-modbus.modbus-tcp-client-shm"
     else
         exe="modbus-tcp-client-shm"
     fi
-    $exe --ip $listen_ip --port $port --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $reconnect $monitor
+    $exe --host $listen_ip --service $port --name-prefix $name_prefix --do-registers $do_regs --di-registers $di_regs --ao-registers $ao_regs --ai-registers $ai_regs $force_shm $reconnect $monitor
 }
 
 function guided_modbus_rtu_client_shm {
@@ -290,6 +292,8 @@ function guided_modbus_rtu_client_shm {
         exe="/bin/modbus-rtu-client-shm"
     elif [[ -x "/usr/bin/modbus-rtu-client-shm" ]]; then
         exe="/usr/bin/modbus-rtu-client-shm"
+    elif [[ -x "/snap/bin/shm-modbus.modbus-rtu-client-shm" ]]; then
+        exe="/snap/bin/shm-modbus.modbus-rtu-client-shm"
     else
         exe="modbus-rtu-client-shm"
     fi
@@ -335,6 +339,8 @@ function guided_dump_shm {
         exe="/bin/dump-shm"
     elif [[ -x "/usr/bin/dump-shm" ]]; then
         exe="/usr/bin/dump-shm"
+    elif [[ -x "/snap/bin/shm-modbus.dump-shm" ]]; then
+        exe="/snap/bin/shm-modbus.dump-shm"
     else
         exe="dump-shm"
     fi
@@ -419,6 +425,8 @@ function guided_write_shm {
         exe="/bin/write-shm"
     elif [[ -x "/usr/bin/write-shm" ]]; then
         exe="/usr/bin/write-shm"
+    elif [[ -x "/snap/bin/shm-modbus.write-shm" ]]; then
+        exe="/snap/bin/shm-modbus.write-shm"
     else
         exe="write-shm"
     fi
@@ -531,6 +539,8 @@ function guided_shared_mem_random {
         exe="/bin/shared-mem-random"
     elif [[ -x "/usr/bin/shared-mem-random" ]]; then
         exe="/usr/bin/shared-mem-random"
+    elif [[ -x "/snap/bin/shm-modbus.shared-mem-random" ]]; then
+        exe="/snap/bin/shm-modbus.shared-mem-random"
     else
         exe="shared-mem-random"
     fi
@@ -570,6 +580,8 @@ function guided_stdin_to_modbus_shm {
         exe="/bin/stdin-to-modbus-shm"
     elif [[ -x "/usr/bin/stdin-to-modbus-shm" ]]; then
         exe="/usr/bin/stdin-to-modbus-shm"
+    elif [[ -x "/snap/bin/shm-modbus.stdin-to-modbus-shm" ]]; then
+        exe="/snap/bin/shm-modbus.stdin-to-modbus-shm"
     else
         exe="stdin-to-modbus-shm"
     fi
@@ -579,4 +591,3 @@ function guided_stdin_to_modbus_shm {
         $exe -n $name_prefix < $fname
     fi
 }
-
