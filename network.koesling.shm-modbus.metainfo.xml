@@ -6,7 +6,7 @@
     <project_license>MIT</project_license>
     <developer_name>Nikolas Koesling</developer_name>
     <name>SHM Modbus</name>
-    <summary>A collection of tools to simulate a modbus TCP/RTU client.</summary>
+    <summary>A collection of tools to simulate a modbus TCP/RTU client</summary>
     <description>
         <p>
             Contains the following tools:</p>
