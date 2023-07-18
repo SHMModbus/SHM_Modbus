@@ -9,17 +9,18 @@
     <summary>A collection of tools to simulate a modbus TCP/RTU client.</summary>
     <description>
         <p>
-            Contains the following tools:
-            <ol>
-                <li>dump-shm</li>
-                <li>write-shm</li>
-                <li>shared-mem-random</li>
-                <li>modbus-tcp-client-shm</li>
-                <li>modbus-rtu-client-shm</li>
-                <li>stdin-to-modbus-shm</li>
-                <li>signal-gen</li>
-            </ol>
-        </p>
+            Contains the following tools:</p>
+        <ul>
+            <li>dump-shm</li>
+            <li>write-shm</li>
+            <li>shared-mem-random</li>
+            <li>modbus-tcp-client-shm</li>
+            <li>modbus-rtu-client-shm</li>
+            <li>stdin-to-modbus-shm</li>
+            <li>signal-gen</li>
+            <li>wago-modbus-coupler-shm</li>
+        </ul>
+        
     </description>
     <categories>
         <category>Development</category>
@@ -35,6 +36,7 @@
     </keywords>
     <url type="homepage">https://nikolask-source.github.io/SHM_Modbus/</url>
     <releases>
+        <release version="1.2.1" date="2023-07-18"/>
         <release version="1.2.0" date="2023-06-30"/>
         <release version="1.1.2" date="2023-06-29"/>
         <release version="1.1.1" date="2023-06-29"/>
@@ -53,6 +55,8 @@
         <binary>write-shm</binary>
         <binary>stdin-to-modbus-shm</binary>
         <binary>shared-mem-random</binary>
+        <binary>signal-gen</binary>
+        <binary>wago-modbus-coupler-shm</binary>
     </provides>
     <launchable type="desktop-id">network.koesling.shm-modbus.desktop</launchable>
     <content_rating type="oars-1.1" />
