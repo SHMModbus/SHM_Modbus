@@ -7,7 +7,7 @@ In this example, port 5020 is used as the forwarding port.
 *change the ports according to your configuration.*
 
 ```
-sudo iptables -A PREROUTING -t nat -p tcp --dport 502 -j REDIRECT --to-port 5020
+iptables -A PREROUTING -t nat -p tcp --dport 502 -j REDIRECT --to-port 5020
 ```
 
 ## 2. Start the Client
@@ -87,5 +87,5 @@ This option is like using ```-s``` for all client ids.
 ## 4. Clenup
 If port redirection is used, the following command should be executed to disable the port redirection after closing the client. *change the ports according to your configuration.*
 ```
-sudo iptables -D PREROUTING -t nat -p tcp --dport 502 -j REDIRECT --to-port 5020
+iptables -D PREROUTING -t nat -p tcp --dport 502 -j REDIRECT --to-port 5020
 ```

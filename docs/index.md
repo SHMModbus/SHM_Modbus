@@ -18,14 +18,6 @@ In addition, a start script is included, which also provides a guided mode.
 
 ## Install
 
-## Flapak
-The application is available as flatpak and published on flathub as ```network.koesling.shm-modbus```.
-
-The installation can be done with the following command: 
-```
-flatpak install network.koesling.shm-modbus
-```
-
 ### Using the Arch User Repository (recommended for Arch based Linux distributions)
 The application is available as [shm-modbus](https://aur.archlinux.org/packages/shm-modbus) in the [Arch User Repository](https://aur.archlinux.org/).
 See the [Arch Wiki](https://wiki.archlinux.org/title/Arch_User_Repository) for information about how to install AUR packages.
@@ -33,6 +25,21 @@ See the [Arch Wiki](https://wiki.archlinux.org/title/Arch_User_Repository) for i
 Unlike the flatpak variant, no ```.desktop``` file is included in the AUR package.
 It is therefore a terminal only application.
 
+
+
+### Snap
+The application is available as snap package.
+You can download it via the [github releases page](https://github.com/NikolasK-source/SHM_Modbus/releases).
+
+Like the AUR package, the snap package is a terminal only application.
+
+### Flapak
+The application is available as flatpak and published on flathub as ```network.koesling.shm-modbus```.
+
+The installation can be done with the following command: 
+```
+flatpak install network.koesling.shm-modbus
+```
 
 ### Launch scripts
 Since the execution of the individual tools via the flatpak is uncomfortable due to the long names, launch scripts are available.
@@ -55,7 +62,7 @@ If these are stored in a directory that is in the PATH environment variable, the
 The primary use case of this application is the use of the individual tools from the command line.
 A desktop launcher with a guided mode is available, but it only provides limited functionality.
 
-Usage Examples (all examples assume that the lunch scripts (long commands) are installed.):
+Usage Examples (all examples assume that the launch scripts (long commands) are installed.):
 - [Modbus TCP client](examples/tcp_client.md)
 - [Shared Memory Dump](examples/dump_shm.md)
 - [Shared Memory Write](examples/write_shm.md)
@@ -68,12 +75,23 @@ Usage Examples (all examples assume that the lunch scripts (long commands) are i
 Information about the configuration of the clients can be found in their documentation.
 ([TCP](https://nikolask-source.github.io/modbus_tcp_client_shm/) / [RTU](https://nikolask-source.github.io/modbus_rtu_client_shm/))
 
-2. Use the Tools to Read and Manipulate:
+2. Use the following tools to read and manipulate the modbus registers:
   - [dump-shm](https://nikolask-source.github.io/dump_shm/) can be used to read the content of a shared memory. 
   Especially useful in connection with ```hexdump```.
   - [write-shm](https://nikolask-source.github.io/write_shm/) can be used to write the content of a shared memory.
   - [shared-mem-random](https://nikolask-source.github.io/shared_mem_random/) is a tool to write random values to a shared memory
-  - [stdin-to-modbus-shm](https://nikolask-source.github.io/stdin_to_modbus_shm/) is a tool to write values to the modbus registers. It can handle various data types and endiannes. 
+  - [stdin-to-modbus-shm](https://nikolask-source.github.io/stdin_to_modbus_shm/) is a tool to write values to the modbus registers. It can handle various data types and endiannes.
+
+### Memory layout
+Each instance of a Modbus client creates 4 shared memories.
+Two of them store binary coils (binary values). 
+The other two store the Modbus registers. 
+(See the [Modbus specification](https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf) for details.)
+
+Each coil is represented by one byte in the shared memory.
+As they are representing binary values, every non zero value of the byte is interpreted as 1.
+
+The 16 bit modbus registers are stored as 16 bit values (16 bit aligned) in the shared memory.
 
 ## Common Problems
 A list of common problems can be found [here](common_problems.md).

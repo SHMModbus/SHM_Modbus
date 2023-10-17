@@ -17,14 +17,14 @@ This can be caused by:
 ## Connection frequently times out (Modbus Client: TCP)
 
 If the connection frequently times out, it may be reasonable to increase the tcp timeout with the option ```--tcp-timeout```.
-It is per default set to 5 seconds.
+Its default value is 5 seconds.
 
 The two options ```--byte-timeout``` and ```--response-timeout``` change the timeout behavior of the modbus connection. 
 These should only be changed by experienced users.
-See the [libmodbus documentation](https://libmodbus.org/docs/v3.1.7/) ([byte timeout](https://libmodbus.org/docs/v3.1.7/modbus_set_byte_timeout.html) and [response timeout](https://libmodbus.org/docs/v3.1.7/modbus_set_response_timeout.html)) for more details.
+See the [libmodbus documentation](https://libmodbus.org/docs/v3.1.7/) ([byte timeout](https://libmodbus.org/reference/modbus_set_byte_timeout/) and [response timeout](https://libmodbus.org/reference/modbus_set_response_timeout/)) for more details.
 
 ## No Permission to create a TCP Socket (Modbus Client: TCP)
-Ports below 1024 can by default not be used by standard users.
+Ports below 1024 are privileged ports and therefore usually can not be used by standard users.
 
 An entry can be added to the iptables that forwards the packets on the actual port to a higher port.
 The following example redirects all tcp packets on port 502 to port 5020:
@@ -34,6 +34,11 @@ iptables -A PREROUTING -t nat -p tcp --dport 502 -j REDIRECT --to-port 5020
 The Modbus client must than be started with the redirection target port.
 ```
 ... -p 5020
+```
+
+Alternatively you can disable the privileged ports by executing the following command as root:
+```
+sysctl net.ipv4.ip_unprivileged_port_start=0
 ```
 
 ## Too many open files (Modbus Client: TCP *and RTU*)

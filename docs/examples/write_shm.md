@@ -14,7 +14,7 @@ write-shm -n modbus_DO < modbus_DO.img
 ```
 write-shm -n modbus_DI < /dev/zero
 ```
-- Write ones values to AI registers
+- Write 0xFFFF to all AI registers
 ```
 write-shm -n modbus_AI -i < /dev/zero
 ```
