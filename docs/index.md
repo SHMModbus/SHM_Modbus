@@ -13,6 +13,7 @@ It contains the following tools:
   - [TCP](https://nikolask-source.github.io/modbus_tcp_client_shm/)
 - Modbus Shared Memory Tools:
   - [STDIN to Modbus SHM](https://nikolask-source.github.io/stdin_to_modbus_shm/)
+  - [SHM Modbus Signal Generator](https://nikolask-source.github.io/shm-modbus-signal-gen/)
 
 In addition, a start script is included, which also provides a guided mode.
 
@@ -41,7 +42,7 @@ The installation can be done with the following command:
 flatpak install network.koesling.shm-modbus
 ```
 
-### Launch scripts
+#### Launch scripts
 Since the execution of the individual tools via the flatpak is uncomfortable due to the long names, launch scripts are available.
 - [Long commands](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969) ([zip download](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969/archive/ca0e97323feadad82a1063130b803ebee65dda20.zip))
 - [Short commands](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641) ([zip download](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641/archive/e8d586d47328eb5f952746d5231eae4ff6bd0039.zip))
