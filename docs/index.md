@@ -27,12 +27,12 @@ Unlike the flatpak variant, no ```.desktop``` file is included in the AUR packag
 It is therefore a terminal only application.
 
 
-
 ### Snap
 The application is available as snap package.
 You can download it via the [github releases page](https://github.com/NikolasK-source/SHM_Modbus/releases).
 
 Like the AUR package, the snap package is a terminal only application.
+
 
 ### Flapak
 The application is available as flatpak and published on flathub as ```network.koesling.shm-modbus```.
@@ -42,33 +42,42 @@ The installation can be done with the following command:
 flatpak install network.koesling.shm-modbus
 ```
 
-#### Launch scripts
-Since the execution of the individual tools via the flatpak is uncomfortable due to the long names, launch scripts are available.
-- [Long commands](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969) ([zip download](https://gist.github.com/NikolasK-source/cb6ce0dc20bb775e369e3a955967a969/archive/ca0e97323feadad82a1063130b803ebee65dda20.zip))
-- [Short commands](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641) ([zip download](https://gist.github.com/NikolasK-source/1da665492478ad2e12f0495e8212f641/archive/e8d586d47328eb5f952746d5231eae4ff6bd0039.zip))
-
-If these are stored in a directory that is in the PATH environment variable, they can be used to start the tools.
-
-| Tool | Long Command | Short Command |
-| - | - | - |
-| Modbus TCP Client | modbus-tcp-client-shm | mbtcp |
-| Modbus RTU Client | modbus-rtu-client-shm | mbrtu |
-| STDIN to Modbus SHM | stdin-to-modbus-shm | stdin2mb |
-| Shared Memory Dump | dump-shm | dshm |
-| Shared Memory Write | write-shm | wshm |
-| Shared Memory Random | shared-mem-random | shmrnd |
 
 ## Use
 
 The primary use case of this application is the use of the individual tools from the command line.
 A desktop launcher with a guided mode is available, but it only provides limited functionality.
 
-Usage Examples (all examples assume that the launch scripts (long commands) are installed.):
+> **_Note_:** All tools in this application are developed for testing purposes. They are not intended to be used in production systems.  
+
+Usage Examples (Commands like in AUR package or flatpak with launch commands (long)):
 - [Modbus TCP client](examples/tcp_client.md)
 - [Shared Memory Dump](examples/dump_shm.md)
 - [Shared Memory Write](examples/write_shm.md)
 - [Shared Memory Random](examples/shm_random.md)
 - [STDIN to Modbus Shared Memory](examples/stdin_to_shm.md)
+- [Signal Generator](examples/signal_gen.md)
+
+### Command overview
+
+A list of alias commands for each package type can be downloaded [here](https://gist.github.com/NikolasK-source/8e45d7509487e9b23dca1fa452c35aa4) ([zip](https://gist.github.com/NikolasK-source/8e45d7509487e9b23dca1fa452c35aa4/archive/ec201a93b6f79389000824339b799dacf216b96b.zip)).
+This simplifies the invocation of the tools and ensures that the same commands can be used regardless of the selected package.
+
+>**_Note_:** The AUR package provides the long commands for each tool, therefore no such alias list exists.
+
+>**_Note_:**: Before applying the alias list, make sure that the target command is not used by any other installed application.
+
+The following table shows the commands to invoke each tool.
+| Tool | long command | short command | Snap | Flatpak |
+| - | - | - | - | - |
+| Modbus TCP Client | ```modbus-tcp-client-shm``` | ```mbtcp``` | ```shm-modbus.modbus-tcp-client-shm``` | ```flatpak run network.koesling.shm-modbus modbus-tcp-client-shm``` |
+| Modbus RTU Client | ```modbus-rtu-client-shm``` | ```mbrtu``` | ```shm-modbus.modbus-rtu-client-shm``` | ```flatpak run network.koesling.shm-modbus modbus-rtu-client-shm``` |
+| STDIN to Modbus SHM | ```stdin-to-modbus-shm``` | ```stdin2mb ``` | ```shm-modbus.stdin-to-modbus-shm``` | ```flatpak run network.koesling.shm-modbus stdin-to-modbus-shm``` |
+| Shared Memory Dump | ```dump-shm``` | ```dshm``` | ```shm-modbus.dump-shm``` | ```flatpak run network.koesling.shm-modbus dump-shm```
+| Shared Memory Write | ```write-shm``` | ```wshm``` | ```shm-modbus.write-shm``` | ```flatpak run network.koesling.shm-modbus write-shm``` |
+| Shared Memory Random | ```shared-mem-random``` | ```shmrnd``` | ```shm-modbus.shared-mem-random``` | ```flatpak run network.koesling.shm-modbus shared-mem-random``` |
+| WAGO Modbus Coupler SHM | ```wago-modbus-coupler-shm``` | ```wagomb``` | ```shm-modbus.wago-modbus-coupler-shm``` | ```flatpak run network.koesling.shm-modbus wago-modbus-coupler-shm``` |
+| Signal Generator | ```shm-modbus-signal-gen```  | ```mbsig``` | ```shm-modbus.signal-gen``` | ```flatpak run network.koesling.shm-modbus signal-gen``` |
 
 ### Steps for Simulating a Modbus Client.
 
