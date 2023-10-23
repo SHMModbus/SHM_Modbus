@@ -73,7 +73,7 @@ The following table shows the commands to invoke each tool.
 | Modbus TCP Client | ```modbus-tcp-client-shm``` | ```mbtcp``` | ```shm-modbus.modbus-tcp-client-shm``` | ```flatpak run network.koesling.shm-modbus modbus-tcp-client-shm``` |
 | Modbus RTU Client | ```modbus-rtu-client-shm``` | ```mbrtu``` | ```shm-modbus.modbus-rtu-client-shm``` | ```flatpak run network.koesling.shm-modbus modbus-rtu-client-shm``` |
 | STDIN to Modbus SHM | ```stdin-to-modbus-shm``` | ```stdin2mb ``` | ```shm-modbus.stdin-to-modbus-shm``` | ```flatpak run network.koesling.shm-modbus stdin-to-modbus-shm``` |
-| Shared Memory Dump | ```dump-shm``` | ```dshm``` | ```shm-modbus.dump-shm``` | ```flatpak run network.koesling.shm-modbus dump-shm```
+| Shared Memory Dump | ```dump-shm``` | ```dshm``` | ```shm-modbus.dump-shm``` | ```flatpak run network.koesling.shm-modbus dump-shm``` |
 | Shared Memory Write | ```write-shm``` | ```wshm``` | ```shm-modbus.write-shm``` | ```flatpak run network.koesling.shm-modbus write-shm``` |
 | Shared Memory Random | ```shared-mem-random``` | ```shmrnd``` | ```shm-modbus.shared-mem-random``` | ```flatpak run network.koesling.shm-modbus shared-mem-random``` |
 | WAGO Modbus Coupler SHM | ```wago-modbus-coupler-shm``` | ```wagomb``` | ```shm-modbus.wago-modbus-coupler-shm``` | ```flatpak run network.koesling.shm-modbus wago-modbus-coupler-shm``` |
