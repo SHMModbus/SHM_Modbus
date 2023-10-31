@@ -34,7 +34,7 @@ You can download it via the [github releases page](https://github.com/NikolasK-s
 Like the AUR package, the snap package is a terminal only application.
 
 
-### Flapak
+### Flatpak
 The application is available as flatpak and published on flathub as ```network.koesling.shm-modbus```.
 
 The installation can be done with the following command: 
