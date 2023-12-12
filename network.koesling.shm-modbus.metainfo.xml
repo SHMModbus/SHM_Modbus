@@ -36,6 +36,7 @@
     </keywords>
     <url type="homepage">https://nikolask-source.github.io/SHM_Modbus/</url>
     <releases>
+        <release version="1.2.2" date="2023-12-12"/>
         <release version="1.2.1" date="2023-07-18"/>
         <release version="1.2.0" date="2023-06-30"/>
         <release version="1.1.2" date="2023-06-29"/>

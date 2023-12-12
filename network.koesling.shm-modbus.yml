@@ -1,6 +1,6 @@
 id: network.koesling.shm-modbus
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 command: shm-modbus
 finish-args:
@@ -31,8 +31,8 @@ modules:
 
     sources:
       - type: git
-        tag: v1.3.1
-        commit: 0d4ba00315ac62df9312fa94c2cdd6856c1be6c7
+        tag: v1.3.2
+        commit: e9e05d431a5b65ef623c90ad66bb7fe90c37c8d5
         url: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
 
   - name: signal_gen
@@ -55,8 +55,8 @@ modules:
 
     sources:
       - type: git
-        tag: v0.2.4
-        commit: 43d16619820661f1440285d724887cd1e305e97b
+        tag: v0.2.5
+        commit: 4756b66b949c4a0ce24a42cfa20ed1641bd75a51
         url: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
 
   - name: write_shm

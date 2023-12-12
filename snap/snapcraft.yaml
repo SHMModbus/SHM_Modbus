@@ -1,6 +1,6 @@
 name: shm-modbus # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
-version: '1.2.1' # just for humans, typically '1.2+git' or '1.3.2'
+version: '1.2.2' # just for humans, typically '1.2+git' or '1.3.2'
 summary: A collection of applications to simulate a Modbus client  # 79 char long summary
 description: |
   Contains command line tools to simulate a Modbus TCP/RTU client.
@@ -111,7 +111,7 @@ parts:
   modbus-tcp-client-shm:
     source: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
     source-type: git
-    source-tag: v1.3.1
+    source-tag: v1.3.2
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -123,7 +123,7 @@ parts:
   modbus-rtu-client-shm:
     source: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
     source-type: git
-    source-tag: v0.2.4
+    source-tag: v0.2.5
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
