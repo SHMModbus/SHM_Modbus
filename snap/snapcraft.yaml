@@ -111,7 +111,7 @@ parts:
   modbus-tcp-client-shm:
     source: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
     source-type: git
-    source-tag: v1.3.2
+    source-tag: v1.5.0
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:

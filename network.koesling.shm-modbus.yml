@@ -31,8 +31,8 @@ modules:
 
     sources:
       - type: git
-        tag: v1.3.2
-        commit: e9e05d431a5b65ef623c90ad66bb7fe90c37c8d5
+        tag: v1.5.0
+        commit: 4eebfdde39202b8cf96701082c8b43ba1517bf8b
         url: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
 
   - name: signal_gen
