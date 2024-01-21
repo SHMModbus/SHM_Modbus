@@ -1,3 +1,0 @@
-#!/bin/bash
-flatpak run network.koesling.shm-modbus dump-shm "$@"
-#6464c49a59a13309b0c17d16ee6d5c9090672f53b5fa86b93a5a424120b864cd
