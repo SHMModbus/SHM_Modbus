@@ -19,34 +19,20 @@ build-packages:
 apps:
   dump-shm:
     command: usr/bin/dump-shm
-    plugs: [shmem-plug]
-    slots: [shmem-slot] 
   write-shm:
     command: usr/bin/write-shm
-    plugs: [shmem-plug]
-    slots: [shmem-slot] 
   shared-mem-random:
     command: usr/bin/shared-mem-random
-    plugs: [shmem-plug]
-    slots: [shmem-slot] 
   stdin-to-modbus-shm:
     command: usr/bin/stdin-to-modbus-shm
-    plugs: [shmem-plug]
-    slots: [shmem-slot] 
   modbus-tcp-client-shm:
     command: usr/bin/modbus-tcp-client-shm
-    plugs: [network, network-bind, shmem-plug]
-    slots: [shmem-slot]
   modbus-rtu-client-shm:
     command: usr/bin/modbus-rtu-client-shm
-    plugs: [shmem-plug]
-    slots: [shmem-slot]
   signal-gen:
     command: bin/signalgen
   wago-modbus-coupler-shm:
     command: usr/bin/wago_modbus_coupler_shm
-    plugs: [shmem-plug]
-    slots: [shmem-slot]
 
 parts:
   dump-shm:
