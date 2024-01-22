@@ -46,6 +46,8 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
 
   write-shm:
     source: https://github.com/NikolasK-source/write_shm.git
@@ -58,6 +60,8 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
   
   shared-mem-random:
     source: https://github.com/NikolasK-source/shared_mem_random.git
@@ -70,6 +74,8 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
 
   stdin-to-modbus-shm:
     source: https://github.com/NikolasK-source/stdin_to_modbus_shm.git
@@ -82,6 +88,8 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
   
   modbus-tcp-client-shm:
     source: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
@@ -94,6 +102,8 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
 
   modbus-rtu-client-shm:
     source: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
@@ -106,6 +116,8 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
 
   signal-gen:
     source: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
@@ -113,6 +125,8 @@ parts:
     source-tag: v1.0.2
     plugin: python
     stage-packages: [python3-minimal, python3.10-minimal]
+    build-attributes:
+      - enable-patchelf
     
   wago-modbus-coupler-shm:
     source: https://github.com/NikolasK-source/wago_modbus_coupler_shm.git
@@ -125,4 +139,6 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    build-attributes:
+      - enable-patchelf
       
