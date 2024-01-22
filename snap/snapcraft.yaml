@@ -126,6 +126,7 @@ parts:
     source-type: git
     source-tag: v1.0.2
     plugin: python
+    stage-packages: [python3-minimal, python3.10-minimal]
     
   wago-modbus-coupler-shm:
     source: https://github.com/NikolasK-source/wago_modbus_coupler_shm.git
