@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1.3.0"
+VERSION="2.0.0"
 
 SLEEP_TIME=2
 
@@ -39,9 +39,10 @@ function print_help {
     echo "  Use --help as argument for commands to get more information about the usage of the program."
     echo ""
     echo "  options:"
-    echo "    --guided                  start in guided mode"
+    echo "    --guided                  start in guided mode (no longer maintained, use --gui)"
     echo "    -h --help                 show this message"
     echo "    --help-all                show usage message of all Mosbus tools"
+    echo "    --gui                     start GUI (default)"
     echo "    --version                 show version of this script"
     echo "    --version-all             show version of all Mosbus tools"
     echo "    --license                 print license information for this script"
@@ -57,6 +58,12 @@ function print_help {
 
 if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     print_help
+    exit 0
+fi
+
+if [ "$command" = "--gui" ]; then
+    # TODO
+    echo "Not yet implemented"
     exit 0
 fi
 
