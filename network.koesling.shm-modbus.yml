@@ -1,12 +1,34 @@
 id: network.koesling.shm-modbus
-runtime: org.freedesktop.Platform
-runtime-version: '23.08'
-sdk: org.freedesktop.Sdk
+runtime: org.kde.Platform
+runtime-version: '6.6'
+sdk: org.kde.Sdk
 command: shm-modbus
 finish-args:
   - --device=shm
   - --share=network
+  - --share=ipc
+  - --socket=fallback-x1
+  - --socket=wayland
 modules:
+  - name: python3-PySide6
+    buildsystem: simple
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+            --prefix=${FLATPAK_DEST} "PySide6>=6.6.2" --no-build-isolation
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/c0/55/1147925dd2fcda54d3ec8dab17bf7bb2df796f818d2d168d43f11f599adc/PySide6-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 3b6266fb29bab66526f2bbab2a6610f9f47a4df42ae6fb3713cd8329f593a561
+      - type: file
+        url: https://files.pythonhosted.org/packages/52/cd/c8c88de4987e4740bf96f6ddb77432add3ea3090c258cc31eed9580523b1/shiboken6-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 9da86622cee5e7201bafe9c5beee3c06d9168c6b8f3e2fac52c1b7df00956bff
+      - type: file
+        url: https://files.pythonhosted.org/packages/db/3b/47dcab3f7a0c4c637d0c8dceabc81aadb3a5e8d8b28c9fcfb8fde3e840f3/PySide6_Essentials-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 90be2cf1a404f1c62777ccc6898895c864376f1fd68ae9f82f7622522bce5814
+      - type: file
+        url: https://files.pythonhosted.org/packages/e8/85/ea68800a6fe010f12efba704a3304b9121c2bf43cb9b0fa9d2b3cf8ddf46/PySide6_Addons-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: cbdb7393de88a916ed1e9bd8407149f911717d1e06aee04119e26042679d8cce
+
   - name: launch_script
     buildsystem: simple
     build-commands:
@@ -45,6 +67,20 @@ modules:
         tag: v1.0.2
         commit: ae911cceebaedfd4d6acab0a9f66d237ea79e3e8
         url: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
+
+  - name: gui
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/share/shm-modbus-gui/py_ui
+      - install -Dm555 src/*.py /app/share/shm-modbus-gui
+      - chmod +x /app/share/shm-modbus-gui/main.py
+      - install -Dm555 src/py_ui/*.py /app/share/shm-modbus-gui/py_ui
+      - ln -s ../share/shm-modbus-gui/main.py /app/bin/shm-modbus-gui
+    sources:
+      - type: git
+        tag: v1.0.0
+        commit: c13109fe916d6e5521e9bf4305342b764bdecb8e
+        url: https://github.com/NikolasK-source/shm_modbus_gui.git
 
   - name: Modbus_RTU_client_shm
     buildsystem: cmake-ninja
