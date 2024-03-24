@@ -22,3 +22,6 @@
 [submodule "apps/wago_modbus_coupler_shm"]
 	path = apps/wago_modbus_coupler_shm
 	url = https://github.com/NikolasK-source/wago_modbus_coupler_shm.git
+[submodule "apps/shm_modbus_gui"]
+	path = apps/shm_modbus_gui
+	url = https://github.com/NikolasK-source/shm_modbus_gui.git
