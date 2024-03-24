@@ -108,7 +108,7 @@ parts:
   modbus-rtu-client-shm:
     source: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
     source-type: git
-    source-tag: v0.2.5
+    source-tag: v0.3.0
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:

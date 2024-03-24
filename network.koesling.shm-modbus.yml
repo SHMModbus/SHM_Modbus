@@ -55,8 +55,8 @@ modules:
 
     sources:
       - type: git
-        tag: v0.2.5
-        commit: 4756b66b949c4a0ce24a42cfa20ed1641bd75a51
+        tag: v0.3.0
+        commit: 2e42384a3e4b14c2873765f178786ff52b07a078
         url: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
 
   - name: write_shm
