@@ -30,7 +30,7 @@ apps:
   modbus-rtu-client-shm:
     command: usr/bin/modbus-rtu-client-shm
   signal-gen:
-    command: bin/signalgen
+    command: usr/bin/signalgen
   wago-modbus-coupler-shm:
     command: usr/bin/wago_modbus_coupler_shm
 
@@ -139,6 +139,15 @@ parts:
     stage-packages: [python3-minimal, python3.10-minimal]
     build-attributes:
       - enable-patchelf
+    override-build: |
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen
+      install -Dm555 src/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen
+      chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen/signalgen.py
+      ln -s ../share/signal-gen/signalgen.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/signalgen
+    stage:
+      - usr/share/signal-gen
+      - usr/bin/signalgen
+    
     
   wago-modbus-coupler-shm:
     source: https://github.com/NikolasK-source/wago_modbus_coupler_shm.git
