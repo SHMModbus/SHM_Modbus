@@ -30,9 +30,12 @@ apps:
   modbus-rtu-client-shm:
     command: usr/bin/modbus-rtu-client-shm
   signal-gen:
-    command: usr/bin/signalgen
+    #command: usr/bin/signalgen
+    command: usr/bin/signal-gen
   wago-modbus-coupler-shm:
     command: usr/bin/wago_modbus_coupler_shm
+  gui:
+    command: usr/bin/shm-modbus-gui
 
 parts:
   dump-shm:
@@ -136,18 +139,37 @@ parts:
     source-type: git
     source-tag: v1.0.2
     plugin: python
-    stage-packages: [python3-minimal, python3.10-minimal]
+    after: [gui]
     build-attributes:
       - enable-patchelf
     override-build: |
       mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen
       install -Dm555 src/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen
       chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen/signalgen.py
-      ln -s ../share/signal-gen/signalgen.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/signalgen
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/bin
+      ln -s ../share/signal-gen/signalgen.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/signal-gen
     stage:
       - usr/share/signal-gen
-      - usr/bin/signalgen
-    
+      - usr/bin/signal-gen
+
+  gui:
+    source: https://github.com/NikolasK-source/shm_modbus_gui.git
+    source-type: git
+    source-tag: v1.0.0
+    plugin: python
+    stage-packages: [python3-minimal, python3.10-minimal]
+    python-packages: [PySide6]
+    build-attributes:
+      - enable-patchelf
+    override-build: |
+      pip3 install --prefix=${SNAPCRAFT_PART_INSTALL}/usr PySide6
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/py_ui
+      install -Dm555 src/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui
+      sed -i "1s/.*/#!\/usr\/bin\/python3/" ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/main.py
+      chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/main.py
+      install -Dm555 src/py_ui/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/py_ui
+      ln -s ../share/shm-modbus-gui/main.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/shm-modbus-gui
+
     
   wago-modbus-coupler-shm:
     source: https://github.com/NikolasK-source/wago_modbus_coupler_shm.git
