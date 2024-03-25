@@ -48,6 +48,8 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/dump-shm
 
   write-shm:
     source: https://github.com/NikolasK-source/write_shm.git
@@ -62,6 +64,8 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/write-shm
   
   shared-mem-random:
     source: https://github.com/NikolasK-source/shared_mem_random.git
@@ -76,6 +80,8 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/shared-mem-random
 
   stdin-to-modbus-shm:
     source: https://github.com/NikolasK-source/stdin_to_modbus_shm.git
@@ -90,11 +96,13 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/stdin-to-modbus-shm
   
   modbus-tcp-client-shm:
     source: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
     source-type: git
-    source-tag: v1.5.3
+    source-tag: v1.5.3-snap
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -104,11 +112,13 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/modbus-tcp-client-shm
 
   modbus-rtu-client-shm:
     source: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
     source-type: git
-    source-tag: v0.3.0
+    source-tag: v0.3.0-snap
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -118,6 +128,8 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/modbus-rtu-client-shm
 
   signal-gen:
     source: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
@@ -141,4 +153,6 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/wago_modbus_coupler_shm
       
