@@ -71,15 +71,16 @@ modules:
   - name: gui
     buildsystem: simple
     build-commands:
-      - mkdir -p /app/share/shm-modbus-gui/py_ui
-      - install -Dm555 src/*.py /app/share/shm-modbus-gui
-      - chmod +x /app/share/shm-modbus-gui/main.py
-      - install -Dm555 src/py_ui/*.py /app/share/shm-modbus-gui/py_ui
-      - ln -s ../share/shm-modbus-gui/main.py /app/bin/shm-modbus-gui
+      - pip3 install --prefix=/app --no-deps .
+      #- mkdir -p /app/share/shm-modbus-gui/py_ui
+      #- install -Dm555 src/*.py /app/share/shm-modbus-gui
+      #- chmod +x /app/share/shm-modbus-gui/main.py
+      #- install -Dm555 src/py_ui/*.py /app/share/shm-modbus-gui/py_ui
+      #- ln -s ../share/shm-modbus-gui/main.py /app/bin/shm-modbus-gui
     sources:
       - type: git
-        tag: v1.0.0
-        commit: c13109fe916d6e5521e9bf4305342b764bdecb8e
+        tag: v1.0.2
+        commit: c2211cae8dde627e592d94483c29827307b08b3d
         url: https://github.com/NikolasK-source/shm_modbus_gui.git
 
   - name: Modbus_RTU_client_shm

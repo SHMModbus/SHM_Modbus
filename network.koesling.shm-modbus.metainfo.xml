@@ -2,8 +2,8 @@
 <!-- Copyright 2022 Nikolas Koesling <nikolas@koesling.info> -->
 <component type="console-application">
     <id>network.koesling.shm-modbus</id>
-    <metadata_license>GPLv3</metadata_license>
-    <project_license>GPLv3</project_license>
+    <metadata_license>MIT</metadata_license>
+    <project_license>GPL-3.0-only</project_license>
     <developer_name>Nikolas Koesling</developer_name>
     <name>SHM Modbus</name>
     <summary>A collection of tools to simulate a modbus TCP/RTU client</summary>

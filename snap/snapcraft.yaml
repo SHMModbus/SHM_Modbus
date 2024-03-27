@@ -8,7 +8,7 @@ description: |
   inspected and manipulated with tool contained in this snap
 
 grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: classic # use 'strict' once you have the right plugs and slots
+confinement: strict # use 'strict' once you have the right plugs and slots
 
 build-packages:
   - autoconf
@@ -16,26 +16,48 @@ build-packages:
   - libtool
   - libreadline-dev
 
+plugs:
+  shm:
+    interface: system-files
+    write:
+      - /dev/shm
+
 apps:
   dump-shm:
     command: usr/bin/dump-shm
+    plugs: [shm]
   write-shm:
     command: usr/bin/write-shm
+    plugs: [shm]
   shared-mem-random:
     command: usr/bin/shared-mem-random
+    plugs: [shm]
   stdin-to-modbus-shm:
     command: usr/bin/stdin-to-modbus-shm
+    plugs: [shm]
   modbus-tcp-client-shm:
     command: usr/bin/modbus-tcp-client-shm
+    plugs: [network, network-bind, shm]
   modbus-rtu-client-shm:
     command: usr/bin/modbus-rtu-client-shm
+    plugs: [serial-port, shm]
   signal-gen:
-    #command: usr/bin/signalgen
     command: usr/bin/signal-gen
   wago-modbus-coupler-shm:
     command: usr/bin/wago_modbus_coupler_shm
+    plugs: [shm]
   gui:
-    command: usr/bin/shm-modbus-gui
+    command: bin/shm-modbus-gui
+    plugs: 
+      - network
+      - network-bind
+      - serial-port
+      - shm
+      - desktop
+      - wayland
+      - x11
+    environment:
+      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins"
 
 parts:
   dump-shm:
@@ -155,20 +177,17 @@ parts:
   gui:
     source: https://github.com/NikolasK-source/shm_modbus_gui.git
     source-type: git
-    source-tag: v1.0.0
+    source-tag: v1.0.2
     plugin: python
-    stage-packages: [python3-minimal, python3.10-minimal]
-    python-packages: [PySide6]
-    build-attributes:
-      - enable-patchelf
-    override-build: |
-      pip3 install --prefix=${SNAPCRAFT_PART_INSTALL}/usr PySide6
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/py_ui
-      install -Dm555 src/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui
-      sed -i "1s/.*/#!\/usr\/bin\/python3/" ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/main.py
-      chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/main.py
-      install -Dm555 src/py_ui/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus-gui/py_ui
-      ln -s ../share/shm-modbus-gui/main.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/shm-modbus-gui
+    stage-packages:
+      - libgl1
+      - libxkbcommon0
+      - libegl1
+      - libfontconfig1
+      - libpulse0
+      - libxcb-cursor0
+      - qt6-base-dev
+      - bsdextrautils
 
     
   wago-modbus-coupler-shm:
