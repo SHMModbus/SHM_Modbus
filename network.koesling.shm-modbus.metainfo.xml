@@ -67,13 +67,29 @@
     <content_rating type="oars-1.1" />
     <screenshots>
         <screenshot type="default">
-            <caption>SHM Modbus GUI</caption>
+            <caption>SHM Modbus GUI (TCP)</caption>
             <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_mbtcp.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>SHM Modbus GUI (RTU)</caption>
             <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_mbrtu.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Modbus Client</caption>
             <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_mbtcp_client.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>SHM Tools</caption>
             <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_tools.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>SHM Tool: Hexdump</caption>
             <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/hexdump.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>SHM Tool: Randomize</caption>
             <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/randomize.png</image>
         </screenshot>
+        
     </screenshots>
 </component>
