@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1.3.0"
+VERSION="2.0.0"
 
 SLEEP_TIME=2
 
@@ -19,13 +19,30 @@ EXEC_COMMANDS=( \
     "shared-mem-random" \
     "signal-gen" \
     "wago-modbus-coupler-shm" \
+    "shm-modbus-gui" \
 )
 
 arg_count=$#
 
+function start_gui {
+    if [[ -x "$SCRIPTPATH/shm-modbus-gui" ]]; then
+        $SCRIPTPATH/shm-modbus-gui "${@:2}"
+    elif [[ -x "/bin/$cmd" ]]; then
+        /bin/shm-modbus-gui "${@:2}"
+    elif [[ -x "/usr/bin/$cmd" ]]; then
+        /usr/bin/shm-modbus-gui "${@:2}"
+    elif [[ -x "/snap/bin/shm-modbus.$cmd" ]]; then
+        /snap/bin/shm-modbus.shm-modbus-gui "${@:2}"
+    else
+        # try to execute from path
+        shm-modbus-gui "${@:2}"
+    fi
+
+    exit $?
+}
+
 if [[ ( "$arg_count" < 1 ) ]] ; then
-    >&2 echo "invalid call: use --help for more information"
-    exit 64
+    start_gui
 fi
 
 trap "exit 0" INT TERM
@@ -39,13 +56,12 @@ function print_help {
     echo "  Use --help as argument for commands to get more information about the usage of the program."
     echo ""
     echo "  options:"
-    echo "    --guided                  start in guided mode"
+    echo "    --guided                  start in guided mode (no longer maintained, use --gui)"
     echo "    -h --help                 show this message"
     echo "    --help-all                show usage message of all Mosbus tools"
+    echo "    --gui                     start GUI (default)"
     echo "    --version                 show version of this script"
     echo "    --version-all             show version of all Mosbus tools"
-    echo "    --license                 print license information for this script"
-    echo "    --license-all             print license information of all Modbus tools"
     echo ""
     echo "  commands:"
     for cmd in "${EXEC_COMMANDS[@]}"
@@ -58,6 +74,10 @@ function print_help {
 if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
     print_help
     exit 0
+fi
+
+if [ "$command" = "--gui" ]; then
+    start_gui
 fi
 
 if [ "$command" = "--help-all" ]; then
@@ -115,63 +135,6 @@ if [ "$command" = "--version-all" ]; then
            $cmd --version
         fi
         
-    done
-    exit 0
-fi
-
-function print_license {
-    echo '  MIT License'
-    echo ''
-    echo '  Copyright (c) 2022 Nikolas Koesling'
-    echo '  '
-    echo '  Permission is hereby granted, free of charge, to any person obtaining a copy'
-    echo '  of this software and associated documentation files (the "Software"), to deal'
-    echo '  in the Software without restriction, including without limitation the rights'
-    echo '  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell'
-    echo '  copies of the Software, and to permit persons to whom the Software is'
-    echo '  furnished to do so, subject to the following conditions:'
-    echo ''
-    echo '  The above copyright notice and this permission notice shall be included in all'
-    echo '  copies or substantial portions of the Software.'
-    echo ''
-    echo '  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR'
-    echo '  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,'
-    echo '  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE'
-    echo '  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER'
-    echo '  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,'
-    echo '  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE'
-    echo '  SOFTWARE.'
-}
-
-if [ "$command" = "--license" ]; then
-    print_license
-    exit 0
-fi
-
-if [ "$command" = "--license-all" ]; then
-    
-    echo "====================> modbus-shm <===================="
-    print_license "  "
-    echo ""
-    echo ""
-
-    for cmd in "${EXEC_COMMANDS[@]}"
-    do
-        echo "====================> $cmd <===================="
-        if [[ -x "$SCRIPTPATH/$cmd" ]]; then
-            $SCRIPTPATH/$cmd --license
-        elif [[ -x "/bin/$cmd" ]]; then
-            /bin/$cmd --license
-        elif [[ -x "/usr/bin/$cmd" ]]; then
-            /usr/bin/$cmd --license
-        elif [[ -x "/snap/bin/shm-modbus.$cmd" ]]; then
-            /snap/bin/shm-modbus.$cmd --license
-        else
-           # try to execute from path
-           $cmd --license
-        fi
-        echo ""
-        echo ""
     done
     exit 0
 fi
@@ -354,5 +317,4 @@ if [ "$command" = "--guided" ]; then
     exit 0;
 fi
 
->&2 echo "unknown command $command: use --help for more information"
-exit 64
+start_gui

@@ -1,12 +1,34 @@
 id: network.koesling.shm-modbus
-runtime: org.freedesktop.Platform
-runtime-version: '23.08'
-sdk: org.freedesktop.Sdk
+runtime: org.kde.Platform
+runtime-version: '6.6'
+sdk: org.kde.Sdk
 command: shm-modbus
 finish-args:
   - --device=shm
   - --share=network
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
 modules:
+  - name: python3-PySide6
+    buildsystem: simple
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+            --prefix=${FLATPAK_DEST} "PySide6>=6.6.2" --no-build-isolation
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/c0/55/1147925dd2fcda54d3ec8dab17bf7bb2df796f818d2d168d43f11f599adc/PySide6-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 3b6266fb29bab66526f2bbab2a6610f9f47a4df42ae6fb3713cd8329f593a561
+      - type: file
+        url: https://files.pythonhosted.org/packages/52/cd/c8c88de4987e4740bf96f6ddb77432add3ea3090c258cc31eed9580523b1/shiboken6-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 9da86622cee5e7201bafe9c5beee3c06d9168c6b8f3e2fac52c1b7df00956bff
+      - type: file
+        url: https://files.pythonhosted.org/packages/db/3b/47dcab3f7a0c4c637d0c8dceabc81aadb3a5e8d8b28c9fcfb8fde3e840f3/PySide6_Essentials-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 90be2cf1a404f1c62777ccc6898895c864376f1fd68ae9f82f7622522bce5814
+      - type: file
+        url: https://files.pythonhosted.org/packages/e8/85/ea68800a6fe010f12efba704a3304b9121c2bf43cb9b0fa9d2b3cf8ddf46/PySide6_Addons-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: cbdb7393de88a916ed1e9bd8407149f911717d1e06aee04119e26042679d8cce
+
   - name: launch_script
     buildsystem: simple
     build-commands:
@@ -31,8 +53,8 @@ modules:
 
     sources:
       - type: git
-        tag: v1.5.0
-        commit: 4eebfdde39202b8cf96701082c8b43ba1517bf8b
+        tag: v1.5.3
+        commit: 9b336c61c130138bf43f18fc089322254ed09526
         url: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
 
   - name: signal_gen
@@ -46,6 +68,21 @@ modules:
         commit: ae911cceebaedfd4d6acab0a9f66d237ea79e3e8
         url: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
 
+  - name: gui
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=/app --no-deps .
+      #- mkdir -p /app/share/shm-modbus-gui/py_ui
+      #- install -Dm555 src/*.py /app/share/shm-modbus-gui
+      #- chmod +x /app/share/shm-modbus-gui/main.py
+      #- install -Dm555 src/py_ui/*.py /app/share/shm-modbus-gui/py_ui
+      #- ln -s ../share/shm-modbus-gui/main.py /app/bin/shm-modbus-gui
+    sources:
+      - type: git
+        tag: v1.0.2
+        commit: c2211cae8dde627e592d94483c29827307b08b3d
+        url: https://github.com/NikolasK-source/shm_modbus_gui.git
+
   - name: Modbus_RTU_client_shm
     buildsystem: cmake-ninja
     config-opts:
@@ -55,8 +92,8 @@ modules:
 
     sources:
       - type: git
-        tag: v0.2.5
-        commit: 4756b66b949c4a0ce24a42cfa20ed1641bd75a51
+        tag: v0.3.0
+        commit: 2e42384a3e4b14c2873765f178786ff52b07a078
         url: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
 
   - name: write_shm
@@ -68,8 +105,8 @@ modules:
 
     sources:
       - type: git
-        tag: v0.1.3
-        commit: bc58b820a79fd00a699835acbfb23f8870c7a528 
+        tag: v1.0.0
+        commit: e11facb8ea556272b3d25d47e028f274f5bb4894 
         url: https://github.com/NikolasK-source/write_shm.git
 
   - name: SHM_random
@@ -81,8 +118,8 @@ modules:
 
     sources:
       - type: git
-        tag: v1.1.0
-        commit: c14decab141650555fdaef43269fb202afd9be2d 
+        tag: v1.2.0
+        commit: 0edd6983134d6675e1fd4efbd7f24b8fd44e8d9d 
         url: https://github.com/NikolasK-source/shared_mem_random.git
 
   - name: dump_shm
@@ -94,8 +131,8 @@ modules:
 
     sources:
       - type: git
-        tag: v1.1.0
-        commit: 3461093c6b35672ba5d5cc90f8cc2527ce3d9471 
+        tag: v1.2.0
+        commit: 3611fdd25c4b7f611dffad017cd98c76b55d69a4 
         url: https://github.com/NikolasK-source/dump_shm.git
 
   - name: stdin-to-modbus-shm

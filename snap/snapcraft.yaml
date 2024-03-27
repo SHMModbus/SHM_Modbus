@@ -1,6 +1,6 @@
 name: shm-modbus # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
-version: '1.3.0-1' # just for humans, typically '1.2+git' or '1.3.2'
+version: '2.0.0-1' # just for humans, typically '1.2+git' or '1.3.2'
 summary: A collection of applications to simulate a Modbus client  # 79 char long summary
 description: |
   Contains command line tools to simulate a Modbus TCP/RTU client.
@@ -8,7 +8,7 @@ description: |
   inspected and manipulated with tool contained in this snap
 
 grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: classic # use 'strict' once you have the right plugs and slots
+confinement: strict # use 'strict' once you have the right plugs and slots
 
 build-packages:
   - autoconf
@@ -16,29 +16,54 @@ build-packages:
   - libtool
   - libreadline-dev
 
+plugs:
+  shm:
+    interface: system-files
+    write:
+      - /dev/shm
+
 apps:
   dump-shm:
     command: usr/bin/dump-shm
+    plugs: [shm]
   write-shm:
     command: usr/bin/write-shm
+    plugs: [shm]
   shared-mem-random:
     command: usr/bin/shared-mem-random
+    plugs: [shm]
   stdin-to-modbus-shm:
     command: usr/bin/stdin-to-modbus-shm
+    plugs: [shm]
   modbus-tcp-client-shm:
     command: usr/bin/modbus-tcp-client-shm
+    plugs: [network, network-bind, shm]
   modbus-rtu-client-shm:
     command: usr/bin/modbus-rtu-client-shm
+    plugs: [serial-port, shm]
   signal-gen:
-    command: bin/signalgen
+    command: usr/bin/signal-gen
   wago-modbus-coupler-shm:
     command: usr/bin/wago_modbus_coupler_shm
+    plugs: [shm]
+  gui:
+    command: bin/shm-modbus-gui
+    plugs: 
+      - network
+      - network-bind
+      - serial-port
+      - shm
+      - desktop
+      - wayland
+      - x11
+    environment:
+      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins"
 
 parts:
   dump-shm:
     source: https://github.com/NikolasK-source/dump_shm.git
     source-type: git
-    source-tag: v1.1.0
+    source-tag: v1.2.0
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -48,11 +73,13 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/dump-shm
 
   write-shm:
     source: https://github.com/NikolasK-source/write_shm.git
     source-type: git
-    source-tag: v0.1.3
+    source-tag: v1.0.0
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -62,11 +89,13 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/write-shm
   
   shared-mem-random:
     source: https://github.com/NikolasK-source/shared_mem_random.git
     source-type: git
-    source-tag: v1.1.0
+    source-tag: v1.2.0
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -76,6 +105,8 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/shared-mem-random
 
   stdin-to-modbus-shm:
     source: https://github.com/NikolasK-source/stdin_to_modbus_shm.git
@@ -90,11 +121,13 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/stdin-to-modbus-shm
   
   modbus-tcp-client-shm:
     source: https://github.com/NikolasK-source/modbus_tcp_client_shm.git
     source-type: git
-    source-tag: v1.5.0
+    source-tag: v1.5.3-snap
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -104,11 +137,13 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/modbus-tcp-client-shm
 
   modbus-rtu-client-shm:
     source: https://github.com/NikolasK-source/modbus_rtu_client_shm.git
     source-type: git
-    source-tag: v0.2.5
+    source-tag: v0.3.0-snap
     plugin: cmake
     cmake-generator: Ninja
     cmake-parameters:
@@ -118,15 +153,42 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/modbus-rtu-client-shm
 
   signal-gen:
     source: https://github.com/NikolasK-source/shm-modbus-signal-gen.git
     source-type: git
     source-tag: v1.0.2
     plugin: python
-    stage-packages: [python3-minimal, python3.10-minimal]
+    after: [gui]
     build-attributes:
       - enable-patchelf
+    override-build: |
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen
+      install -Dm555 src/*.py ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen
+      chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen/signalgen.py
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/bin
+      ln -s ../share/signal-gen/signalgen.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/signal-gen
+    stage:
+      - usr/share/signal-gen
+      - usr/bin/signal-gen
+
+  gui:
+    source: https://github.com/NikolasK-source/shm_modbus_gui.git
+    source-type: git
+    source-tag: v1.0.2
+    plugin: python
+    stage-packages:
+      - libgl1
+      - libxkbcommon0
+      - libegl1
+      - libfontconfig1
+      - libpulse0
+      - libxcb-cursor0
+      - qt6-base-dev
+      - bsdextrautils
+
     
   wago-modbus-coupler-shm:
     source: https://github.com/NikolasK-source/wago_modbus_coupler_shm.git
@@ -141,4 +203,6 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
     build-attributes:
       - enable-patchelf
+    stage:
+      - usr/bin/wago_modbus_coupler_shm
       
