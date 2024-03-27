@@ -22,7 +22,7 @@ jobs:
 
     # Make sure the snap is installable
     - run: |
-        sudo snap install --classic --dangerous ${{ steps.build-snap.outputs.snap }}
+        sudo snap install --dangerous ${{ steps.build-snap.outputs.snap }}
     # Do some testing with the snap
     - run: |
         shm-modbus.write-shm --version
