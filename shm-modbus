@@ -7,9 +7,6 @@ SLEEP_TIME=2
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself/4774063
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-source $SCRIPTPATH/guided-commands.sh
-source $SCRIPTPATH/manual-commands.sh
-
 EXEC_COMMANDS=( \
     "modbus-tcp-client-shm" \
     "modbus-rtu-client-shm" \
@@ -56,7 +53,6 @@ function print_help {
     echo "  Use --help as argument for commands to get more information about the usage of the program."
     echo ""
     echo "  options:"
-    echo "    --guided                  start in guided mode (no longer maintained, use --gui)"
     echo "    -h --help                 show this message"
     echo "    --help-all                show usage message of all Mosbus tools"
     echo "    --gui                     start GUI (default)"
@@ -168,160 +164,5 @@ do
     fi
 done
 
-if [ "$command" = "--guided" ]; then
-    while true
-    do
-        echo ">>>The following applications can be executed:"
-        echo ">>>  Guided: This script will guide you through the command line arguments:"
-        echo ">>>     1) modbus-tcp-client-shm"
-        echo ">>>     2) modbus-rtu-client-shm"
-        echo ">>>     3) dump-shm"
-        echo ">>>     4) write-shm"
-        echo ">>>     5) shared-mem-random"
-        echo ">>>     6) stdin-to-modbus-shm"
-        #echo ">>>     7) signal-gen"
-        #echo ">>>     8) wago-modbus-coupler-shm"
-        echo ">>>  Manual: specify the command line arguments manually:"
-        echo ">>>    11) modbus-tcp-client-shm"
-        echo ">>>    12) modbus-rtu-client-shm"
-        echo ">>>    13) dump-shm"
-        echo ">>>    14) write-shm"
-        echo ">>>    15) shared-mem-random"
-        echo ">>>    16) stdin-to-modbus-shm"
-        echo ">>>    17) signal-gen"
-        echo ">>>    18) wago-modbus-coupler-shm"
-        echo ">>>  Other:"
-        echo ">>>     0) exit"
-        echo ">>>    20) list all shared memories"
-        echo ">>>    99) output short information text for each possible application"
-
-        # user input
-        read -p ">>>Enter command number: " user_input
-        echo ""
-
-        if [ "$user_input" = "0" ]; then                # exit
-            # Do nothing
-            break
-
-        elif [ "$user_input" = "99" ]; then              # help
-            echo ""
-            echo "modbus-tcp-client-shm:"
-            echo "    This application is a Modbus TCP client that stores the content of its registers in shared memory."
-            echo ""
-            echo "modbus-rtu-client-shm:"
-            echo "    This application is a Modbus RTU client that stores the content of its registers in shared memory."
-            echo ""
-            echo "dump-shm:"
-            echo "    This application outputs the content of a shared memory to stdout."
-            echo "    It for example can be used to write the content to a file or to visualize it with a hexdump."
-            echo ""
-            echo "write-shm:"
-            echo "    This application writes the data it reads from stdin to a shared memory."
-            echo "    It can be used to load a shared memory from any file (e.g. /dev/zero, /dev/random, ...)."
-            echo ""
-            echo "shared-mem-random:"
-            echo "    This application cyclically writes random values to a shared memory."
-            echo ""
-            echo "stdin-to-modbus-shm:"
-            echo "    This application reads commands from stdin and writes them to the shared memory created by one of the shared memory"
-            echo "    modbus clients (TCP/RTU)."
-
-            #TODO signal-gen, wago-modbus-coupler-shm
-
-            echo ""
-            read -p "press return to continue..." dummy
-
-        elif [ "$user_input" = "1" ]; then              # modbus-tcp-client-shm guided
-            guided_modbus_tcp_client_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "2" ]; then              # modbus-rtu-client-shm guided
-            guided_modbus_rtu_client_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "3" ]; then              # dump-shm guided
-            guided_dump_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "4" ]; then              # write-shm guided
-            guided_write_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "5" ]; then              # shared-mem-random guided
-            guided_shared_mem_random $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "6" ]; then              # stdin-to-modbus-shm guided
-            guided_stdin_to_modbus_shm $SCRIPTPATH
-            break
-
-        #elif [ "$user_input" = "7" ]; then              # signal-gen
-        #    guided_signal_gen $SCRIPTPATH
-        #    break
-
-        #elif [ "$user_input" = "8" ]; then              # wago-modbus-coupler-shm
-        #    guided_wago_modbus_coupler_shm $SCRIPTPATH
-        #    break
-
-        elif [ "$user_input" = "11" ]; then             # modbus-tcp-client-shm manual
-            manual_modbus_tcp_client_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "12" ]; then             # modbus-rtu-client-shm manual
-            manual_modbus_rtu_client_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "13" ]; then             # dump-shm manual
-            manual_dump_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "14" ]; then             # write-shm manual
-            manual_write_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "15" ]; then             # shared-mem-random manual
-            manual_shared_mem_random $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "16" ]; then             # stdin-to-modbus-shm manual
-            manual_stdin_to_modbus_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "17" ]; then              # signal-gen
-            manual_signal_gen $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "18" ]; then              # wago-modbus-coupler-shm
-            manual_wago_modbus_coupler_shm $SCRIPTPATH
-            break
-
-        elif [ "$user_input" = "20" ]; then             # list shared memories
-            shms=$(ls /dev/shm)
-
-            if [ "$shms" = "" ]; then
-                echo "no open shared memoy."
-            else
-                echo "Open shared memories:"
-                for shm in ${shms}
-                do
-                    echo "  - $shm"
-                done
-            fi
-            
-            sleep $SLEEP_TIME
-            echo ""
-
-        else
-            >&2 echo "invalid input. try again. use 0 to exit."
-            sleep $SLEEP_TIME
-            echo ""
-            continue
-        fi
-
-        echo ""
-    done
-
-    exit 0;
-fi
-
-start_gui
+>&2 echo "unknown command: $command"
+exit 64
