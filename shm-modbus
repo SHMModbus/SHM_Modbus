@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="2.0.0"
+VERSION="2.0.1"
 
 SLEEP_TIME=2
 
@@ -17,7 +17,7 @@ EXEC_COMMANDS=( \
     "write-shm" \
     "stdin-to-modbus-shm" \
     "shared-mem-random" \
-    "signal-gen" \
+    "shm-modbus-signal-gen" \
     "wago-modbus-coupler-shm" \
     "shm-modbus-gui" \
 )
@@ -118,8 +118,10 @@ if [ "$command" = "--version-all" ]; then
     echo "modbus-shm $VERSION"
     for cmd in "${EXEC_COMMANDS[@]}"
     do
-        if [ $cmd = "signal-gen" ]; then
-            printf "signal-gen "
+        printf "  > "
+
+        if [ $cmd = "shm-modbus-signal-gen" ]; then
+            printf "$cmd "
         fi
 
         if [[ -x "$SCRIPTPATH/$cmd" ]]; then
@@ -137,6 +139,11 @@ if [ "$command" = "--version-all" ]; then
         
     done
     exit 0
+fi
+
+# for compatibility reasons, may be removed in future version
+if [ "$command" = "signal-gen" ]; then
+    command="shn-modbus-signal-gen"
 fi
 
 for cmd in "${EXEC_COMMANDS[@]}"
