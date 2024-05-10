@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="2.0.1"
+VERSION="2.1.0"
 
 SLEEP_TIME=2
 
@@ -17,6 +17,7 @@ EXEC_COMMANDS=( \
     "shm-modbus-signal-gen" \
     "wago-modbus-coupler-shm" \
     "shm-modbus-gui" \
+    "shm-format" \
 )
 
 arg_count=$#
