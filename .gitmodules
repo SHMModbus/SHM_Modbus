@@ -25,3 +25,6 @@
 [submodule "apps/shm_modbus_gui"]
 	path = apps/shm_modbus_gui
 	url = https://github.com/NikolasK-source/shm_modbus_gui.git
+[submodule "apps/shm_format"]
+	path = apps/shm_format
+	url = https://github.com/SHMModbus/shm_format.git
