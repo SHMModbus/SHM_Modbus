@@ -140,7 +140,7 @@ fi
 
 # for compatibility reasons, may be removed in future version
 if [ "$command" = "signal-gen" ]; then
-    command="shn-modbus-signal-gen"
+    command="shm-modbus-signal-gen"
 fi
 
 for cmd in "${EXEC_COMMANDS[@]}"
