@@ -36,7 +36,7 @@
         <keyword translate="no">SharedMemory</keyword>
         <keyword translate="no">shm</keyword>
     </keywords>
-    <url type="homepage">https://nikolask-source.github.io/SHM_Modbus/</url>
+    <url type="homepage">https://shmmodbus.github.io/SHM_Modbus/</url>
     <releases>
         <release version="2.1.0" date="2024-05-24"/>
         <release version="2.0.0" date="2024-03-27"/>
@@ -71,43 +71,43 @@
     <screenshots>
         <screenshot type="default">
             <caption>SHM Modbus GUI (Modbus Settings)</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_main.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/gui_main.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Modbus GUI (Modbus Settings) (Dark Mode)</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_main_dark.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/gui_main_dark.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Modbus GUI (TCP)</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_mbtcp.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/gui_mbtcp.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Modbus GUI (RTU)</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_mbrtu.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/gui_mbrtu.png</image>
         </screenshot>
         <screenshot>
             <caption>Modbus Client</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_mbtcp_client.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/gui_mbtcp_client.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Tools</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/gui_tools.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/gui_tools.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Tool: Hexdump</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/hexdump.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/hexdump.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Tool: Randomize</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/randomize.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/randomize.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Tool: Inspect Values</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/tool_inspect.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/tool_inspect.png</image>
         </screenshot>
         <screenshot>
             <caption>SHM Tool: Set Values</caption>
-            <image>https://nikolask-source.github.io/SHM_Modbus/assets/images/tool_set.png</image>
+            <image>https://shmmodbus.github.io/SHM_Modbus/assets/images/tool_set.png</image>
         </screenshot>
         
     </screenshots>
