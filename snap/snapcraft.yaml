@@ -185,7 +185,7 @@ parts:
   shared-mem-random:
     source: https://github.com/SHMModbus/shared_mem_random.git
     source-type: git
-    source-tag: v1.4.0
+    source-tag: v1.4.1
     after:
       - cxxshm
       - cxxsemaphore
@@ -339,7 +339,7 @@ parts:
   gui:
     source: https://github.com/SHMModbus/shm_modbus_gui.git
     source-type: git
-    source-tag: v2.1.0
+    source-tag: v2.1.1
     after:
       - cxxshm
       - cxxsemaphore
