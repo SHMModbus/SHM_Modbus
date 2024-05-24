@@ -14,5 +14,5 @@ jobs:
       name: "Build"
       with:
         bundle: shm-modbus.flatpak
-        manifest-path: network.koesling.shm-modbus.yml
+        manifest-path: io.github.shmmodbus.yml
         cache-key: flatpak-builder-${{ github.sha }}

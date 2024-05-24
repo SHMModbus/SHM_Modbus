@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2022 Nikolas Koesling <nikolas@koesling.info> -->
-<component type="console-application">
-    <id>network.koesling.shm-modbus</id>
+<component type="desktop-application">
+    <id>io.github.shmmodbus</id>
     <metadata_license>MIT</metadata_license>
     <project_license>GPL-3.0-only</project_license>
     <developer_name>Nikolas Koesling</developer_name>
@@ -36,7 +36,7 @@
         <keyword translate="no">SharedMemory</keyword>
         <keyword translate="no">shm</keyword>
     </keywords>
-    <url type="homepage">https://shmmodbus.github.io/SHM_Modbus/</url>
+    <url type="homepage">https://shmmodbus.github.io/</url>
     <releases>
         <release version="2.1.1" date="2024-05-19"/>
         <release version="2.1.0" date="2024-05-15"/>
@@ -67,7 +67,7 @@
         <binary>wago-modbus-coupler-shm</binary>
         <binary>shm-format</binary>
     </provides>
-    <launchable type="desktop-id">network.koesling.shm-modbus.desktop</launchable>
+    <launchable type="desktop-id">io.github.shmmodbus.desktop</launchable>
     <content_rating type="oars-1.1" />
     <screenshots>
         <screenshot type="default">

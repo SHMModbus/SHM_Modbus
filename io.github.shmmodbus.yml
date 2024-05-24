@@ -1,4 +1,4 @@
-id: network.koesling.shm-modbus
+id: io.github.shmmodbus
 runtime: org.kde.Platform
 runtime-version: '6.6'
 sdk: org.kde.Sdk
@@ -258,17 +258,17 @@ modules:
   - name: metadata
     buildsystem: simple
     build-commands:
-      - install -D -m 644 network.koesling.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+      - install -D -m 644 io.github.shmmodbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
       - install -D -m 644 -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps" ${FLATPAK_ID}.svg
       - install -D -m 644 ${FLATPAK_ID}_256.png "${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/${FLATPAK_ID}.png"
       - install -D -m 644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop
 
     sources:
       - type: file
-        path: network.koesling.shm-modbus.metainfo.xml
+        path: io.github.shmmodbus.metainfo.xml
       - type: file
-        path: network.koesling.shm-modbus.svg
+        path: io.github.shmmodbus.svg
       - type: file
-        path: network.koesling.shm-modbus_256.png
+        path: io.github.shmmodbus_256.png
       - type: file
-        path: network.koesling.shm-modbus.desktop
+        path: io.github.shmmodbus.desktop
