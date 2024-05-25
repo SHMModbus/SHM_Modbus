@@ -67,7 +67,7 @@
         <binary>wago-modbus-coupler-shm</binary>
         <binary>shm-format</binary>
     </provides>
-    <launchable type="desktop-id">io.github.shmmodbus.desktop</launchable>
+    <launchable type="desktop-id">io.github.shmmodbus.shm-modbus.desktop</launchable>
     <content_rating type="oars-1.1" />
     <screenshots>
         <screenshot type="default">
