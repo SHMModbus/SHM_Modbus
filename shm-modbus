@@ -1,9 +1,6 @@
 #!/bin/bash
 
-VERSION="2.1.1"
-
-# https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself/4774063
-SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+VERSION="2.1.2"
 
 EXEC_COMMANDS=( \
     "modbus-tcp-client-shm" \
@@ -20,30 +17,14 @@ EXEC_COMMANDS=( \
 
 arg_count=$#
 
-function start_gui {
-    if [[ -x "$SCRIPTPATH/shm-modbus-gui" ]]; then
-        $SCRIPTPATH/shm-modbus-gui "${@:2}"
-    elif [[ -x "/bin/$cmd" ]]; then
-        /bin/shm-modbus-gui "${@:2}"
-    elif [[ -x "/usr/bin/$cmd" ]]; then
-        /usr/bin/shm-modbus-gui "${@:2}"
-    elif [[ -x "/snap/bin/shm-modbus.$cmd" ]]; then
-        /snap/bin/shm-modbus.shm-modbus-gui "${@:2}"
-    else
-        # try to execute from path
-        shm-modbus-gui "${@:2}"
-    fi
-
-    exit $?
-}
-
+# default command: shm-modbus-gui
 if [[ ( "$arg_count" < 1 ) ]] ; then
-    start_gui
+    command="shm-modbus-gui"
+else
+    command=$1
 fi
 
 trap "exit 0" INT TERM
-
-command=$1
 
 function print_help {
     echo "usage: $(basename "$0") [OPTION] command [CMD_OPTION..]"
@@ -72,7 +53,7 @@ if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
 fi
 
 if [ "$command" = "--gui" ]; then
-    start_gui
+    command="shm-modbus-gui"
 fi
 
 if [ "$command" = "--help-all" ]; then
@@ -84,20 +65,15 @@ if [ "$command" = "--help-all" ]; then
     for cmd in "${EXEC_COMMANDS[@]}"
     do
         echo "===============> $cmd <==============="
-
-        if [[ -x "$SCRIPTPATH/$cmd" ]]; then
-            $SCRIPTPATH/$cmd --help
-        elif [[ -x "/bin/$cmd" ]]; then
-            /bin/$cmd --help
-        elif [[ -x "/usr/bin/$cmd" ]]; then
-            /usr/bin/$cmd --help
-        elif [[ -x "/snap/bin/shm-modbus.$cmd" ]]; then
-            /snap/bin/shm-modbus.$cmd --help
-        else
-           # try to execute from path
-           $cmd --help
-        fi
         
+        which $cmd > /dev/null
+        if [[ $? -ne 0 ]]
+        then
+            >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
+        else
+            $cmd --help
+        fi
+
         echo ""
         echo ""
     done
@@ -119,17 +95,12 @@ if [ "$command" = "--version-all" ]; then
             printf "$cmd "
         fi
 
-        if [[ -x "$SCRIPTPATH/$cmd" ]]; then
-            $SCRIPTPATH/$cmd --version
-        elif [[ -x "/bin/$cmd" ]]; then
-            /bin/$cmd --version
-        elif [[ -x "/usr/bin/$cmd" ]]; then
-            /usr/bin/$cmd --version
-        elif [[ -x "/snap/bin/shm-modbus.$cmd" ]]; then
-            /snap/bin/shm-modbus.$cmd --version
+        which $cmd > /dev/null
+        if [[ $? -ne 0 ]]
+        then
+            >&2 echo "ERROR: command \"$cmd\" not found \$PATH"
         else
-           # try to execute from path
-           $cmd --version
+            $cmd --version
         fi
         
     done
@@ -146,17 +117,12 @@ do
     if [ "$command" = "$cmd" ]; then
         trap "" INT TERM
 
-        if [[ -x "$SCRIPTPATH/$command" ]]; then
-            $SCRIPTPATH/$command "${@:2}"
-        elif [[ -x "/bin/$cmd" ]]; then
-            /bin/$command "${@:2}"
-        elif [[ -x "/usr/bin/$cmd" ]]; then
-            /usr/bin/$command "${@:2}"
-        elif [[ -x "/snap/bin/shm-modbus.$cmd" ]]; then
-            /snap/bin/shm-modbus.$command "${@:2}"
+        which $command > /dev/null
+        if [[ $? -ne 0 ]]
+        then
+            >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
         else
-           # try to execute from path
-           $command "${@:2}"
+            $command "${@:2}"
         fi
 
         exit $?
