@@ -1,12 +1,7 @@
 name: shm-modbus # you probably want to 'snapcraft register <name>'
 base: core22 # the base snap is the execution environment for this snap
-version: '2.1.0-1' # just for humans, typically '1.2+git' or '1.3.2'
-summary: A collection of applications to simulate a Modbus client  # 79 char long summary
-description: |
-  Contains command line tools to simulate a Modbus TCP/RTU client.
-  The data of the client is stored in shared memory and can be 
-  inspected and manipulated with tool contained in this snap
-
+version: '2.1.2-1' # just for humans, typically '1.2+git' or '1.3.2'
+adopt-info: shm-modbus
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 
@@ -24,32 +19,53 @@ plugs:
       - /dev/shm
 
 apps:
+  shm-modbus:
+    command: usr/bin/shm-modbus
+    plugs:
+      - network
+      - network-bind
+      - serial-port
+      - shm
+      - desktop
+      - wayland
+      - x11
   dump-shm:
     command: usr/bin/dump-shm
     plugs: [shm]
+    aliases: [dump-shm]
   write-shm:
     command: usr/bin/write-shm
     plugs: [shm]
+    aliases: [write-shm]
   shared-mem-random:
     command: usr/bin/shared-mem-random
     plugs: [shm]
+    aliases: [shared-mem-random]
   stdin-to-modbus-shm:
     command: usr/bin/stdin-to-modbus-shm
     plugs: [shm]
+    aliases: [stdin-to-modbus-shm]
   modbus-tcp-client-shm:
     command: usr/bin/modbus-tcp-client-shm
     plugs: [network, network-bind, shm]
+    aliases: [modbus-tcp-client-shm]
   modbus-rtu-client-shm:
     command: usr/bin/modbus-rtu-client-shm
     plugs: [serial-port, shm]
+    aliases: [modbus-rtu-client-shm]
   signal-gen:
     command: usr/bin/signal-gen
+  shm-modbus-signal-gen:
+    command: usr/bin/signal-gen
+    aliases: [shm-modbus-signal-gen]
   wago-modbus-coupler-shm:
-    command: usr/bin/wago_modbus_coupler_shm
+    command: usr/bin/wago-modbus-coupler-shm
     plugs: [shm]
+    aliases: [wago-modbus-coupler-shm]
   shm-format:
     command: usr/bin/shm-format
     plugs: [shm]
+    aliases: [shm-format]
   gui:
     command: bin/shm-modbus-gui
     plugs: 
@@ -62,6 +78,19 @@ apps:
       - x11
     environment:
       QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins"
+  shm-modbus-gui:
+    command: bin/shm-modbus-gui
+    plugs: 
+      - network
+      - network-bind
+      - serial-port
+      - shm
+      - desktop
+      - wayland
+      - x11
+    environment:
+      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins"
+    aliases: [shm-modbus-gui]
 
 parts:
   cxxshm:
@@ -146,6 +175,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -172,6 +202,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -199,6 +230,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -226,6 +258,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -247,6 +280,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -273,6 +307,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -301,6 +336,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -332,20 +368,24 @@ parts:
       chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/share/signal-gen/signalgen.py
       mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/bin
       ln -s ../share/signal-gen/signalgen.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/signal-gen
+      ln -s ../share/signal-gen/signalgen.py ${SNAPCRAFT_PART_INSTALL}/usr/bin/shm-modbus-signal-gen
     stage:
       - usr/share/signal-gen
       - usr/bin/signal-gen
+      - usr/bin/shm-modbus-signal-gen
 
   gui:
     source: https://github.com/SHMModbus/shm_modbus_gui.git
     source-type: git
-    source-tag: v2.1.1
+    source-tag: v2.1.1-flatpak
     after:
       - cxxshm
       - cxxsemaphore
       - nlohmann_json
       - cxxopts
     plugin: python
+    python-packages:
+     - pyside6==6.2.4
     stage-packages:
       - libgl1
       - libxkbcommon0
@@ -374,6 +414,7 @@ parts:
       - -DCLANG_FORMAT=OFF
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_TEST=OFF
       - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/x86_64-linux-gnu/cmake/cxxshm/
       - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/x86_64-linux-gnu/cmake/cxxitimer/
       - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/x86_64-linux-gnu/cmake/cxxsemaphore/
@@ -381,6 +422,20 @@ parts:
       - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
+    override-build: |
+      snapcraftctl build
+      mv ${SNAPCRAFT_PART_INSTALL}/usr/bin/wago_modbus_coupler_shm ${SNAPCRAFT_PART_INSTALL}/usr/bin/wago-modbus-coupler-shm
     stage:
-      - usr/bin/wago_modbus_coupler_shm
+      - usr/bin/wago-modbus-coupler-shm
       
+  shm-modbus:
+    source: .
+    source-type: local
+    plugin: nil
+    override-build: |
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus
+      install -m555 shm-modbus ${SNAPCRAFT_PART_INSTALL}/usr/share/shm-modbus/shm-modbus.sh
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/bin
+      ln -s ../share/shm-modbus/shm-modbus.sh ${SNAPCRAFT_PART_INSTALL}/usr/bin/shm-modbus
+    parse-info:
+      - io.github.shmmodbus.shm-modbus.metainfo.xml

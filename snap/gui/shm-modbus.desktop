@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Shared Memory Modbus
+GenericName=Modbus Client
+Categories=Development
+Comment=Collection of applications to simulate a Modbus client
+Icon=${SNAP}/meta/gui/shm-modbus.png
+Exec=shm-modbus
+Keywords=shm;shared-memory;modbus;client
+Type=Application
