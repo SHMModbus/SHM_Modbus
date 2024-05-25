@@ -1,4 +1,4 @@
-id: io.github.shmmodbus
+id: io.github.shmmodbus.shm-modbus
 runtime: org.kde.Platform
 runtime-version: '6.6'
 sdk: org.kde.Sdk
@@ -258,17 +258,17 @@ modules:
   - name: metadata
     buildsystem: simple
     build-commands:
-      - install -D -m 644 io.github.shmmodbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+      - install -D -m 644 io.github.shmmodbus.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
       - install -D -m 644 -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps" ${FLATPAK_ID}.svg
       - install -D -m 644 ${FLATPAK_ID}_256.png "${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/${FLATPAK_ID}.png"
       - install -D -m 644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop
 
     sources:
       - type: file
-        path: io.github.shmmodbus.metainfo.xml
+        path: io.github.shmmodbus.shm-modbus.metainfo.xml
       - type: file
-        path: io.github.shmmodbus.svg
+        path: io.github.shmmodbus.shm-modbus.svg
       - type: file
-        path: io.github.shmmodbus_256.png
+        path: io.github.shmmodbus.shm-modbus_256.png
       - type: file
-        path: io.github.shmmodbus.desktop
+        path: io.github.shmmodbus.shm-modbus.desktop

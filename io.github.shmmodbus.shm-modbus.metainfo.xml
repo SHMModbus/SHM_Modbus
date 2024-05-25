@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2022 Nikolas Koesling <nikolas@koesling.info> -->
 <component type="desktop-application">
-    <id>io.github.shmmodbus</id>
+    <id>io.github.shmmodbus.shm-modbus</id>
     <metadata_license>MIT</metadata_license>
     <project_license>GPL-3.0-only</project_license>
     <developer_name>Nikolas Koesling</developer_name>
