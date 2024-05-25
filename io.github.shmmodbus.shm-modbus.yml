@@ -271,3 +271,5 @@ modules:
         path: io.github.shmmodbus.shm-modbus_256.png
       - type: file
         path: io.github.shmmodbus.shm-modbus.desktop
+      - type: file
+        path: shm-modbus
