@@ -65,6 +65,8 @@ modules:
 
   - name: nlohmann_json
     buildsystem: cmake-ninja
+    config-opts:
+      - -DJSON_BuildTests=OFF
     sources:
       - type: git
         tag: v3.11.3
@@ -108,15 +110,6 @@ modules:
         url: https://files.pythonhosted.org/packages/5e/0a/910b4d3ce071079b07d8f6f7dd2a2cc0b5303e3e2046347f22c7d1fe5780/PySide6_Addons-6.6.3-cp38-abi3-manylinux_2_31_aarch64.whl
         sha256: 0891f9950656cee22edd557594c61a54bb326fc70682b23565ddc6cd2a6c1415
 
-  - name: launch_script
-    buildsystem: simple
-    build-commands:
-      - install -D -m 755 shm-modbus ${FLATPAK_DEST}/bin/shm-modbus
-
-    sources:
-      - type: file
-        path: shm-modbus
-
   - name: Modbus_TCP_client_shm
     buildsystem: cmake-ninja
     config-opts:
@@ -125,6 +118,7 @@ modules:
       - -DCOMPILER_WARNINGS=OFF
       - -DCLANG_TIDY=OFF
       - -DENABLE_TEST=OFF
+      - -DBUILD_DOC=OFF
 
     sources:
       - type: git
@@ -150,7 +144,7 @@ modules:
       - pip3 install --prefix=/app --no-deps .
     sources:
       - type: git
-        tag: v2.1.1
+        tag: v2.1.1-flatpak
         url: https://github.com/SHMModbus/shm_modbus_gui.git
 
   - name: Modbus_RTU_client_shm
@@ -176,6 +170,7 @@ modules:
       - -DCOMPILER_WARNINGS=OFF
       - -DCLANG_TIDY=OFF
       - -DENABLE_TEST=OFF
+      - -DBUILD_DOC=OFF
 
     sources:
       - type: git
@@ -190,6 +185,7 @@ modules:
       - -DCOMPILER_WARNINGS=OFF
       - -DCLANG_TIDY=OFF
       - -DENABLE_TEST=OFF
+      - -DBUILD_DOC=OFF
 
     sources:
       - type: git
@@ -204,6 +200,7 @@ modules:
       - -DCOMPILER_WARNINGS=OFF
       - -DCLANG_TIDY=OFF
       - -DENABLE_TEST=OFF
+      - -DBUILD_DOC=OFF
 
     sources:
       - type: git
@@ -218,6 +215,7 @@ modules:
       - -DCOMPILER_WARNINGS=OFF
       - -DCLANG_TIDY=OFF
       - -DENABLE_TEST=OFF
+      - -DBUILD_DOC=OFF
 
     sources:
       - type: git
@@ -232,6 +230,7 @@ modules:
       - -DCOMPILER_WARNINGS=OFF
       - -DCLANG_TIDY=OFF
       - -DENABLE_TEST=OFF
+      - -DBUILD_DOC=OFF
 
     sources:
       - type: git
@@ -254,11 +253,11 @@ modules:
         tag: v1.1.1
         url: https://github.com/SHMModbus/wago_modbus_coupler_shm.git
 
-
-  - name: metadata
+  - name: launch_scripts_and_metadata
     buildsystem: simple
     build-commands:
-      - install -D -m 644 io.github.shmmodbus.shm-modbus.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+      - install -D -m 755 shm-modbus ${FLATPAK_DEST}/bin/shm-modbus
+      - install -D -m 644 ${FLATPAK_ID}.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
       - install -D -m 644 -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps" ${FLATPAK_ID}.svg
       - install -D -m 644 ${FLATPAK_ID}_256.png "${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/${FLATPAK_ID}.png"
       - install -D -m 644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop
