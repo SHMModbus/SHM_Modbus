@@ -77,7 +77,7 @@ apps:
       - wayland
       - x11
     environment:
-      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins"
+      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins"
   shm-modbus-gui:
     command: bin/shm-modbus-gui
     plugs: 
@@ -89,7 +89,7 @@ apps:
       - wayland
       - x11
     environment:
-      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/qt6/plugins"
+      QT_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins"
     aliases: [shm-modbus-gui]
 
 parts:
@@ -107,6 +107,14 @@ parts:
       - -DBUILD_DOC=OFF
       - -DENABLE_TEST=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    stage:
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libcxxshm.so
+      - usr/include/cxxshm.hpp
+      - usr/include/cxxshm_version_info.hpp
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/cxxshmTargets.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/cxxshmTargets-release.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/cxxshmConfig.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/cxxshmConfigVersion.cmake
 
   cxxopts:
     source: https://github.com/jarro2783/cxxopts.git
@@ -119,6 +127,12 @@ parts:
       - -DCXXOPTS_BUILD_EXAMPLES=OFF
       - -DCXXOPTS_BUILD_TESTS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    stage:
+      - usr/lib/cmake/cxxopts/cxxopts-config.cmake
+      - usr/lib/cmake/cxxopts/cxxopts-config-version.cmake
+      - usr/lib/cmake/cxxopts/cxxopts-targets.cmake
+      - usr/include/cxxopts.hpp
+      - usr/lib/pkgconfig/cxxopts.pc
 
   cxxsemaphore:
     source: https://github.com/NikolasK-source/cxxsemaphore.git
@@ -134,6 +148,14 @@ parts:
       - -DBUILD_DOC=OFF
       - -DENABLE_TEST=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    stage:
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libcxxsemaphore.so
+      - usr/include/cxxsemaphore.hpp
+      - usr/include/cxxsemaphore_version_info.hpp
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/cxxsemaphoreTargets.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/cxxsemaphoreTargets-release.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/cxxsemaphoreConfig.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/cxxsemaphoreConfigVersion.cmake
 
   cxxitimer:
     source: https://github.com/NikolasK-source/cxxitimer.git
@@ -149,6 +171,14 @@ parts:
       - -DBUILD_DOC=OFF
       - -DENABLE_TEST=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
+    stage:
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libcxxitimer.so
+      - usr/include/cxxitimer.hpp
+      - usr/include/cxxitimer_version_info.hpp
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/cxxitimerTargets.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/cxxitimerTargets-release.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/cxxitimerConfig.cmake
+      - usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/cxxitimerConfigVersion.cmake
 
   nlohmann_json:
     source: https://github.com/nlohmann/json.git
@@ -158,6 +188,11 @@ parts:
     cmake-generator: Ninja
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DJSON_BuildTests=OFF
+    stage:
+      - usr/include/nlohmann
+      - usr/share/cmake/nlohmann_json
+      - usr/share/pkgconfig/nlohmann_json.pc
 
   dump-shm:
     source: https://github.com/SHMModbus/dump_shm.git
@@ -176,11 +211,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -203,11 +238,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -231,11 +266,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -259,11 +294,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -281,11 +316,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -308,11 +343,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -337,11 +372,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     stage:
@@ -415,11 +450,11 @@ parts:
       - -DCOMPILER_WARNINGS=OFF
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_TEST=OFF
-      - -Dcxxshm_DIR=/root/parts/cxxshm/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxshm/
-      - -Dcxxitimer_DIR=/root/parts/cxxitimer/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxitimer/
-      - -Dcxxsemaphore_DIR=/root/parts/cxxsemaphore/install/usr/lib/${SNAP_ARCH}-linux-gnu/cmake/cxxsemaphore/
-      - -Dcxxopts_DIR=/root/parts/cxxopts/install/usr/lib/cmake/cxxopts/
-      - -Dnlohmann_json_DIR=/root/parts/nlohmann_json/install/usr/share/cmake/nlohmann_json/
+      - -Dcxxshm_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxshm/
+      - -Dcxxitimer_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxitimer/
+      - -Dcxxsemaphore_DIR=${SNAPCRAFT_STAGE}/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/cmake/cxxsemaphore/
+      - -Dcxxopts_DIR=${SNAPCRAFT_STAGE}/usr/lib/cmake/cxxopts/
+      - -Dnlohmann_json_DIR=${SNAPCRAFT_STAGE}/usr/share/cmake/nlohmann_json/
     build-attributes:
       - enable-patchelf
     override-build: |

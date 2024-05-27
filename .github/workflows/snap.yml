@@ -1,14 +1,6 @@
 name: snap
 on:
-  push:
-    tags:
-      - '*'
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+  [ push, pull_request ]
 
 jobs:
   build:
