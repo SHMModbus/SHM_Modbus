@@ -160,7 +160,7 @@ modules:
       - pip3 install --prefix=/app --no-deps .
     sources:
       - type: git
-        tag: v2.1.1-flatpak
+        tag: v2.1.2
         url: https://github.com/SHMModbus/shm_modbus_gui.git
 
   - name: Modbus_RTU_client_shm
