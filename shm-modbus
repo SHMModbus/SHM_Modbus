@@ -15,10 +15,8 @@ EXEC_COMMANDS=( \
     "shm-format" \
 )
 
-arg_count=$#
-
 # default command: shm-modbus-gui
-if [[ ( "$arg_count" < 1 ) ]] ; then
+if [[ "$#" -lt 1 ]] ; then
     command="shm-modbus-gui"
 else
     command=$1
@@ -66,8 +64,7 @@ if [ "$command" = "--help-all" ]; then
     do
         echo "===============> $cmd <==============="
         
-        which $cmd > /dev/null
-        if [[ $? -ne 0 ]]
+        if ! which "$cmd" > /dev/null
         then
             >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
         else
@@ -91,12 +88,11 @@ if [ "$command" = "--version-all" ]; then
     do
         printf "  > "
 
-        if [ $cmd = "shm-modbus-signal-gen" ]; then
-            printf "$cmd "
+        if [ "$cmd" = "shm-modbus-signal-gen" ]; then
+            printf "%s " "$cmd"
         fi
 
-        which $cmd > /dev/null
-        if [[ $? -ne 0 ]]
+        if ! which "$cmd" > /dev/null
         then
             >&2 echo "ERROR: command \"$cmd\" not found \$PATH"
         else
@@ -117,8 +113,7 @@ do
     if [ "$command" = "$cmd" ]; then
         trap "" INT TERM
 
-        which $command > /dev/null
-        if [[ $? -ne 0 ]]
+        if ! which "$command" > /dev/null
         then
             >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
         else
