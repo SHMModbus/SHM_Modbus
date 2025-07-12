@@ -57,7 +57,7 @@ if [ "$command" = "--gui" ]; then
 fi
 
 if [ "$command" = "--help-all" ]; then
-    echo "===============> modbus-shm <==============="
+    echo "===============> shm-modbus <==============="
     print_help
     echo ""
     echo ""
@@ -81,12 +81,12 @@ if [ "$command" = "--help-all" ]; then
 fi
 
 if [ "$command" = "--version" ]; then
-    echo "modbus-shm $VERSION"
+    echo "shm-modbus $VERSION"
     exit 0
 fi
 
 if [ "$command" = "--version-all" ]; then
-    echo "modbus-shm $VERSION"
+    echo "shm-modbus $VERSION"
     for cmd in "${EXEC_COMMANDS[@]}"
     do
         printf "  > "
