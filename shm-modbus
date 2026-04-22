@@ -19,7 +19,7 @@ EXEC_COMMANDS=( \
 if [[ "$#" -lt 1 ]] ; then
     command="shm-modbus-gui"
 else
-    command=$1
+    command=${1}
 fi
 
 trap "exit 0" INT TERM
@@ -40,21 +40,21 @@ function print_help {
     echo "  commands:"
     for cmd in "${EXEC_COMMANDS[@]}"
     do
-        printf '    %-25s execute %s with the given arguments' "$cmd" "$cmd"
+        printf '    %-25s execute %s with the given arguments' "${cmd}" "${cmd}"
         echo ""
     done
 }
 
-if [ "$command" = "--help" ] || [ "$command" = "-h" ]; then
+if [[ "${command}" = "--help" ]] || [[ "${command}" = "-h" ]]; then
     print_help
     exit 0
 fi
 
-if [ "$command" = "--gui" ]; then
+if [[ "${command}" = "--gui" ]]; then
     command="shm-modbus-gui"
 fi
 
-if [ "$command" = "--help-all" ]; then
+if [[ "${command}" = "--help-all" ]]; then
     echo "===============> shm-modbus <==============="
     print_help
     echo ""
@@ -62,13 +62,13 @@ if [ "$command" = "--help-all" ]; then
 
     for cmd in "${EXEC_COMMANDS[@]}"
     do
-        echo "===============> $cmd <==============="
-        
-        if ! which "$cmd" > /dev/null
+        echo "===============> ${cmd} <==============="
+
+        if ! command -v "${cmd}" > /dev/null
         then
-            >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
+            >&2 echo "ERROR: command \"${cmd}\" not found in \$PATH"
         else
-            $cmd --help
+            "${cmd}" --help
         fi
 
         echo ""
@@ -77,52 +77,52 @@ if [ "$command" = "--help-all" ]; then
     exit 0
 fi
 
-if [ "$command" = "--version" ]; then
-    echo "shm-modbus $VERSION"
+if [[ "${command}" = "--version" ]]; then
+    echo "shm-modbus ${VERSION}"
     exit 0
 fi
 
-if [ "$command" = "--version-all" ]; then
-    echo "shm-modbus $VERSION"
+if [[ "${command}" = "--version-all" ]]; then
+    echo "shm-modbus ${VERSION}"
     for cmd in "${EXEC_COMMANDS[@]}"
     do
         printf "  > "
 
-        if [ "$cmd" = "shm-modbus-signal-gen" ]; then
-            printf "%s " "$cmd"
+        if [[ "${cmd}" = "shm-modbus-signal-gen" ]]; then
+            printf "%s " "${cmd}"
         fi
 
-        if ! which "$cmd" > /dev/null
+        if ! command -v "${cmd}" > /dev/null
         then
-            >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
+            >&2 echo "ERROR: command \"${cmd}\" not found in \$PATH"
         else
-            $cmd --version
+            "${cmd}" --version
         fi
-        
+
     done
     exit 0
 fi
 
 # for compatibility reasons, may be removed in future version
-if [ "$command" = "signal-gen" ]; then
+if [[ "${command}" = "signal-gen" ]]; then
     command="shm-modbus-signal-gen"
 fi
 
 for cmd in "${EXEC_COMMANDS[@]}"
 do
-    if [ "$command" = "$cmd" ]; then
+    if [[ "${command}" = "${cmd}" ]]; then
         trap "" INT TERM
 
-        if ! which "$command" > /dev/null
+        if ! command -v "${command}" > /dev/null
         then
-            >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
+            >&2 echo "ERROR: command \"${cmd}\" not found in \$PATH"
             exit 127
         fi
 
-        $command "${@:2}"
+        "${command}" "${@:2}"
         exit $?
     fi
 done
 
->&2 echo "unknown command: $command"
+>&2 echo "unknown command: ${command}"
 exit 64
