@@ -32,10 +32,10 @@ function print_help {
     echo ""
     echo "  options:"
     echo "    -h --help                 show this message"
-    echo "    --help-all                show usage message of all Mosbus tools"
+    echo "    --help-all                show usage message of all Modbus tools"
     echo "    --gui                     start GUI (default)"
     echo "    --version                 show version of this script"
-    echo "    --version-all             show version of all Mosbus tools"
+    echo "    --version-all             show version of all Modbus tools"
     echo ""
     echo "  commands:"
     for cmd in "${EXEC_COMMANDS[@]}"
@@ -94,7 +94,7 @@ if [ "$command" = "--version-all" ]; then
 
         if ! which "$cmd" > /dev/null
         then
-            >&2 echo "ERROR: command \"$cmd\" not found \$PATH"
+            >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
         else
             $cmd --version
         fi
