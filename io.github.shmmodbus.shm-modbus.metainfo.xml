@@ -17,7 +17,7 @@
             <li>modbus-tcp-client-shm</li>
             <li>modbus-rtu-client-shm</li>
             <li>stdin-to-modbus-shm</li>
-            <li>signal-gen</li>
+            <li>shm-modbus-signal-gen</li>
             <li>shm-modbus-gui</li>
             <li>wago-modbus-coupler-shm</li>
             <li>shm-format</li>
@@ -38,6 +38,7 @@
     </keywords>
     <url type="homepage">https://shmmodbus.github.io/</url>
     <releases>
+        <release version="2.1.7" date="2026-04-22"/>
         <release version="2.1.6" date="2025-07-13"/>
         <release version="2.1.5" date="2025-07-12"/>
         <release version="2.1.4" date="2025-07-11"/>
@@ -59,7 +60,7 @@
         <release version="1.0.0" date="2022-08-19"/>
     </releases>
     <provides>
-        <binary>modbus-shm</binary>
+        <binary>shm-modbus</binary>
         <binary>modbus-tcp-client-shm</binary>
         <binary>modbus-rtu-client-shm</binary>
         <binary>dump-shm</binary>
@@ -67,7 +68,7 @@
         <binary>stdin-to-modbus-shm</binary>
         <binary>shared-mem-random</binary>
         <binary>shm-modbus-gui</binary>
-        <binary>signal-gen</binary>
+        <binary>shm-modbus-signal-gen</binary>
         <binary>wago-modbus-coupler-shm</binary>
         <binary>shm-format</binary>
     </provides>
