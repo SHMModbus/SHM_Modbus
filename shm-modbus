@@ -116,10 +116,10 @@ do
         if ! which "$command" > /dev/null
         then
             >&2 echo "ERROR: command \"$cmd\" not found in \$PATH"
-        else
-            $command "${@:2}"
+            exit 127
         fi
 
+        $command "${@:2}"
         exit $?
     fi
 done
